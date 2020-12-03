@@ -1,34 +1,77 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import LoginLayout from '../views/layout/layout-login.vue'
-import BaseLayout from '../views/layout/layout-base.vue'
+import Vue from "vue";
+import VueRouter from "vue-router";
+import LoginLayout from "../views/layout/layout-login.vue";
+import BaseLayout from "../views/layout/layout-base.vue";
+import store from "../store";
+import axios from "axios";
+import '@/assets/css/adminlte.min.css'
 
-Vue.use(VueRouter)
+
+
+Vue.use(VueRouter);
+function guard(to, from, next) {
+	if (store.state.autenticado == "true" || store.state.autenticado) {
+		axios.defaults.headers.Authorization = store.state.accessToken;
+
+		next();
+	} else {
+		next("/");
+	}
+}
+
+function verifyAutenticado(to, from, next) {
+	next();
+}
 
 const router = new VueRouter({
-    mode: 'history',
+	mode: "history",
 	base: process.env.BASE_URL,
-	routes:[
-        {
-		    path: '/',
-			name: 'login',
-			meta: { layout: LoginLayout },
-			component: () => import('../views/Login.vue'),
-
-        },
+	routes: [
 		{
-		    path: '/index',
-			name: 'index',
-			meta: { layout: BaseLayout },
-			component: () => import('../views/Index.vue'),
-        },
-        {
-		    path: '/arriendo-libros',
-			name: 'arriendo-Libros',
-			meta: { layout: BaseLayout },
-			component: () => import('../views/arriendoLibros.vue'),
+			path: "/",
+			name: "login",
+			meta: { layout: LoginLayout },
+			component: () => import("../views/Login.vue"),
+			beforeEnter: verifyAutenticado,
 		},
-    ]
-})
+		{
+			path: "/index",
+			name: "index",
+			meta: { layout: BaseLayout },
+			component: () => import("../views/Index.vue"),
+			beforeEnter: guard
+		},
+		{
+			path: "/ingreso-libros",
+			name: "ingreso-Libros",
+			meta: { layout: BaseLayout },
+			component: () => import("../views/arriendoLibros.vue"),
+			beforeEnter: guard
+		},
+		{
+			path: "/nuevo-pedido",
+			name: "nuevo-pedido",
+			meta: { layout: BaseLayout },
+			component: () => import("../views/pedidoLibros.vue"),
+			beforeEnter: guard
+		},
+	],
+});
 
-export default router
+router.beforeEach((to, from, next) => {
+	/** Se intercepta cada petición axios y se controla el error 401, para alumnos que perdieron la vigencia de dsu token **/
+	axios.interceptors.response.use(
+		
+		function(response) {
+	
+			if (response.data.status === "Token is Expired") {
+				return next("/");
+			}
+			//console.log(response);
+			return response;
+		},
+	);
+	
+	return next();
+});
+export default router;

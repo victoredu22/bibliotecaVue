@@ -2,7 +2,7 @@
     <index />
 </template>
 <script>
-import index from '@/components/arriendoLibros/index'
+import index from '@/components/pedidos/index'
 export default {
   components:{
     index

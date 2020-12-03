@@ -1,21 +1,13 @@
 <template>
-    <div class="page-content-wrapper">
-        <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                        <p>Tabla Alumnos</p>
-                </div>
-            </div>
-            </div>
-        </div>
-        </div>
-    </div>
+    <arriendoLibros />
 </template>
 <script>
+import arriendoLibros from '@/components/index/index';
 import {mapActions, mapState} from "vuex";
 export default {
+    components:{
+        arriendoLibros
+    },
     data(){
         return{
 
