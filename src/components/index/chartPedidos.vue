@@ -9,10 +9,11 @@
 			<p class="text-muted">
 				Libros que no tienen stock en el sistema
 			</p>
-			<!-- {{series}}
-			<PuSkeleton v-if="tablaPedidos" :count="2"/>  -->
+		
+			<PuSkeleton v-if="tablaPedidos" :count="2"/> 
 			<div class="row" >
 				<apexchart
+					v-if="carga"
 					type="pie"
 					width="400"
 					:options="chartOptions"
@@ -31,12 +32,14 @@
 export default {
 	data: () => ({
 		series: [],
+		//series: [1, 1],
 		chartOptions: {
 			chart: {
 				width: 500,
 				type: "pie",
 			},
 			labels: [],
+			//labels: ['Team A', 'Team B'],
 			responsive: [
 				{
 					breakpoint: 480,
@@ -51,10 +54,11 @@ export default {
 				},
 			],
 		},
+		carga:false,
 	}),
 	computed:{
 		tablaPedidos(){
-			return (this.series.length > 0) ? false : true; 
+			return (this.chartOptions.labels.length > 0) ? false : true; 
 		}
 	},
 	methods: {
@@ -64,12 +68,13 @@ export default {
 			const cantidad = conjuntoLibros.map((elem) => elem.cantidad);
 			const nombreLibro = conjuntoLibros.map((elem) => elem.nombreLibro);
 
-      this.series.push(cantidad);
-      this.chartOptions.labels.push(nombreLibro)		
+      this.series = cantidad;
+      this.chartOptions.labels = nombreLibro ;
+			this.carga = true;		
 		},
 	},
 	created() {
-		//this.loadChart();
+		this.loadChart();
 	},
 };
 </script>

@@ -92,13 +92,14 @@
 			</div>
 		</div>
 
-		<template v-slot:modal-footer="{ ok, cancel }">
+		<template v-slot:modal-footer="{ ok }">
 			<!-- Emulate built in modal footer ok and cancel button actions -->
-			<b-button @click="cancel()">
-				Cancelar
-			</b-button>
-			<b-button variant="primary" @click="ok()">
-				Aceptar
+			<b-button v-if="!loadCargaPedido" block variant="primary" @click="ok()">
+				Nuevo Pedido
+			</b-button> 
+			<b-button v-else block variant="primary">
+				<b-spinner small type="grow"></b-spinner>
+				Cargando...
 			</b-button>
 		</template>
 		<toastComponent ref="toastComponent"></toastComponent>
@@ -129,6 +130,7 @@ export default {
 			msg: "",
 			variant: "",
 			cantidadLibros: "",
+			loadCargaPedido:false
 		};
 	},
 	computed: {
@@ -156,14 +158,14 @@ export default {
 				idAlumno,
 				fechaEntrega,
 			};
-
+			this.loadCargaPedido = true;
 			const { data } = await this.axios.post(`api/create-pedido`, form);
 			const { errores } = data;
 			const { msg } = data;
 			const { ok } = data;
 			const { pedido } = data;
 			this.error = errores ? errores : { ...this.error };
-
+				this.loadCargaPedido = false;
 			if (!ok) {
 				if (msg == "libroEncontrado") {
 					const arrayToast = {

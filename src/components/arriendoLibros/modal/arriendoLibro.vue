@@ -67,13 +67,15 @@
 				</span>
 			</b-form-group>
 		</b-form-group>
-		<template v-slot:modal-footer="{ ok, cancel }">
+		<template v-slot:modal-footer="{ ok }">
 			<!-- Emulate built in modal footer ok and cancel button actions -->
-			<b-button @click="cancel()">
-				Cancelar
+
+			<b-button v-if="!loadAsignar" block variant="primary" @click="ok()">
+				Asignar Libro Estudiante
 			</b-button>
-			<b-button variant="primary" @click="ok()">
-				Aceptar
+			<b-button v-else block variant="primary">
+				<b-spinner small type="grow"></b-spinner>
+				Cargando...
 			</b-button>
 		</template>
 		<toastComponent ref="toastComponent"></toastComponent>
@@ -96,6 +98,7 @@ export default {
 				rutAlumno: "",
 				fechaEntrega: "",
 			},
+			loadAsignar:false
 		};
 	},
 	computed: {
@@ -116,6 +119,7 @@ export default {
 		handleEnvio(bvModalEvt) {
 			// Prevent modal from closing
 			bvModalEvt.preventDefault();
+			this.loadAsignar = true;
 			this.formLibro();
 		},
 		async formLibro() {
@@ -130,7 +134,7 @@ export default {
 				"api/arriendo-libros",
 				formulario
 			);
-
+			this.loadAsignar = false;
 			const { errores } = data;
 
 			this.error = errores ? errores : { ...this.error };

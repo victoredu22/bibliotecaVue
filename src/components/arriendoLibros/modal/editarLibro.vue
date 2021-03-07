@@ -62,13 +62,14 @@
 				</span>
 			</b-form-group>
 		</b-form-group>
-		<template v-slot:modal-footer="{ ok, cancel }">
+		<template v-slot:modal-footer="{ ok }">
 			<!-- Emulate built in modal footer ok and cancel button actions -->
-			<b-button @click="cancel()">
-				Cancelar
+			<b-button block v-if="!loadCargaEdicion" variant="primary" @click="ok()">
+				Editar Libro
 			</b-button>
-			<b-button variant="primary" @click="ok()">
-				Aceptar
+			<b-button v-else block variant="primary">
+				<b-spinner small type="grow"></b-spinner>
+				Cargando...
 			</b-button>
 		</template>
 		<toastComponent ref="toastComponent"></toastComponent>
@@ -95,6 +96,7 @@ export default {
 			destino: "",
 		},
 		selectCurso: null,
+		loadCargaEdicion:false
 	}),
 	computed: {
 		...mapState("libros", ["jsonLibros"]),
@@ -105,6 +107,7 @@ export default {
 		handleEnvio(bvModalEvt) {
 			// Prevent modal from closing
 			bvModalEvt.preventDefault();
+			this.loadCargaEdicion = true;
 			this.updateLibro();
 		},
 		async updateLibro() {
@@ -114,7 +117,8 @@ export default {
 			);
 			const { errores } = data;
 			const { libro } = data;
-
+			
+			this.loadCargaEdicion = false;
 			this.error = errores ? errores : { ...this.error };
 
 			if (libro) {

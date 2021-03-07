@@ -78,13 +78,14 @@
 			</span>
 		</b-form-group>
 
-		<template v-slot:modal-footer="{ ok, cancel }">
+		<template v-slot:modal-footer="{ ok }">
 			<!-- Emulate built in modal footer ok and cancel button actions -->
-			<b-button @click="cancel()">
-				Cancelar
+			<b-button v-if="!loadCargaPedido" block variant="primary" @click="ok()">
+				Agregar Libro
 			</b-button>
-			<b-button variant="primary" @click="ok()">
-				Aceptar
+			<b-button v-else block variant="primary">
+				<b-spinner small type="grow"></b-spinner>
+				Cargando...
 			</b-button>
 		</template>
 		<toastComponent ref="toastComponent" />
@@ -126,6 +127,7 @@ export default {
 			autor: "",
 			curso: "",
 		},
+		loadCargaPedido:false
 	}),
 	computed: {
 		...mapState("libros", ["jsonLibros"]),
@@ -136,7 +138,9 @@ export default {
 		handleEnvio(bvModalEvt) {
 			// Prevent modal from closing
 			bvModalEvt.preventDefault();
+			this.loadCargaPedido = true;
 			this.nuevoLibro();
+			
 		},
 		changeCurso() {
 			this.error.curso = false;
@@ -168,15 +172,13 @@ export default {
 				destino: this.datos.destino,
 			};
 
-			console.log(this.datos);
-
-
 			const { data } = await this.axios.post(
 				"/api/create-libro",
 				formulario
 			);
 			const { libro } = data;
 			const { errores } = data;
+			this.loadCargaPedido = false;
 
 			if (errores) {
 				this.error = errores;
