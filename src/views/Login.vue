@@ -5,7 +5,7 @@
 				<div class="slick-slider slick-initialized h-100">
 					<div class="h-100">
 						<div class="position-relative h-100 d-flex justify-content-center align-items-center bg-premium-dark" tabindex="-1">
-							<div class="slide-img-bg" style='background-image: url("/img/imgInicio.85624ff0.jpg")'></div>
+							<div class="slide-img-bg" :style="{'background-image': 'url(' + require('@/assets/biblioteca.jpg') + ')'}" ></div>
 
 						</div>
 					</div>
@@ -25,6 +25,8 @@
 						</div>
 						<div class="form-group ">
 							<label for="">Rut</label>
+			
+							
 							<input v-on:keyup="validationRut()" type="text" class="form-control inputRut" v-model="rut"  placeholder="Ej: 17708532-6" v-rut >
 							<p v-if="rutInValido" style="color:red">Rut Invalido</p>
 						</div>
@@ -46,6 +48,9 @@
 <script>
 import {mapActions,mapState} from "vuex";
 import router from '../router'
+import img from '../assets/biblioteca.jpg'
+
+
 export default {
 
     data(){
