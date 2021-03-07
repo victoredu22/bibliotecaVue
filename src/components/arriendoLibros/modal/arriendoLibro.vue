@@ -13,21 +13,17 @@
 				</div>
 			</div>
 			<div class="media-body" style="margin-left:20px">
-				<h4>{{ capitalizarPalabras(libro.nombreLibro) }}</h4>
+				<h4>{{ libro.nombreLibro }}</h4>
 				<li style="list-style: none;">
 					Autor :
 					<span style="color:#045e04;font-weight: 700;">
-						{{capitalizarPalabras(libro.autor)}}
+						{{ capitalizarPalabras(libro.autor) }}
 					</span>
-				</li>
-				<li style="list-style: none;">
-					Curso Asociado :
-					<span style="color:#045e04;">{{ libro.curso }}</span>
 				</li>
 				<li style="list-style: none;">
 					Disponibilidad :
 					<span style="color:#045e04;">
-						{{libro.cantidad}}
+						{{ libro.cantidad }}
 					</span>
 				</li>
 			</div>
@@ -52,24 +48,24 @@
 				<small>
 					Ingresa el rut del alumno que deseas prestarle el libro
 				</small>
-				<br>
+				<br />
 				<span v-if="error.rutAlumno" style="color:red">
-					Este {{ error.rutAlumno[0] }}
+					Debes ingresar un alumno valido.
 				</span>
-
 			</b-form-group>
-				<b-form-group label="Fecha Entrega" style="margin-top:20px">
-					<b-calendar
-						v-model="fechaEntrega"
-						@context="onContext"
-						locale="es"
-						@input="cickCalendario()"
-						block>
-					</b-calendar>
-					<span v-if="error.fechaEntrega" style="color:red">
-						Este {{ error.fechaEntrega[0] }}
-					</span>
-				</b-form-group>
+			<b-form-group label="Fecha Entrega" style="margin-top:20px">
+				<b-calendar
+					v-model="fechaEntrega"
+					@context="onContext"
+					locale="es"
+					@input="cickCalendario()"
+					block
+				>
+				</b-calendar>
+				<span v-if="error.fechaEntrega" style="color:red">
+					Este {{ error.fechaEntrega[0] }}
+				</span>
+			</b-form-group>
 		</b-form-group>
 		<template v-slot:modal-footer="{ ok, cancel }">
 			<!-- Emulate built in modal footer ok and cancel button actions -->
@@ -95,7 +91,7 @@ export default {
 			libro: {},
 			rut: "",
 			rutInValido: "",
-			fechaEntrega:'',
+			fechaEntrega: "",
 			error: {
 				rutAlumno: "",
 				fechaEntrega: "",
@@ -104,8 +100,10 @@ export default {
 	},
 	computed: {
 		...mapState("libros", ["jsonLibros"]),
+		...mapState("libros", ["activeLibro"]),
 	},
 	methods: {
+		...mapActions("libros", ["reduceStockLibro"]),
 		seleccionAlumno(alumno) {
 			this.error.idAlumno = false;
 		},
@@ -120,47 +118,44 @@ export default {
 			bvModalEvt.preventDefault();
 			this.formLibro();
 		},
-		formLibro() {
+		async formLibro() {
 			const { idLibro } = this.libro;
 			const formulario = {
 				idLibro,
 				rutAlumno: this.limpiaRutAlumno(this.rut),
-				fechaEntrega:this.fechaEntrega
+				fechaEntrega: this.fechaEntrega,
 			};
-				
-			this.axios
-				.post("api/arriendo-libros", formulario)
-				.then((res) => {
-					if (res.data.errores) {
-						this.error = res.data.errores;
-					}
 
-					const msgServidor = res.data.msg;
+			const { data } = await this.axios.post(
+				"api/arriendo-libros",
+				formulario
+			);
 
-					if (msgServidor === "libroEncontrado") {
-						const arrayToast = {
-							msg: "El alumno ya tiene asignado el libro.",
-							title: "Atención",
-							variant: "warning",
-						}; 
-						this.$refs.toastComponent.makeToast(arrayToast);
-					}
+			const { errores } = data;
 
-					if(msgServidor === "libroArrendado"){
-						const libroArriendo = this.jsonLibros.find(
-							(elem, index) => elem.idLibro === idLibro
-						);
-						libroArriendo.cantidad--;
-						
-						const arrayToast = {
-							msg: "Felicitaciones se ha ingresado con exito.",
-							title: "Exito",
-							variant: "success",
-						}; 
-						this.$refs.toastComponent.makeToast(arrayToast);
-					}
-		
-				});
+			this.error = errores ? errores : { ...this.error };
+
+			const { msg: msgServidor } = data;
+			
+			if (msgServidor === "libroEncontrado") {
+				const arrayToast = {
+					msg: "El alumno ya tiene asignado el libro.",
+					title: "Atención",
+					variant: "warning",
+				};
+				this.$refs.toastComponent.makeToast(arrayToast);
+			}
+
+			if (msgServidor === "libroArrendado") {
+				this.reduceStockLibro(idLibro);
+				const arrayToast = {
+					msg: "Felicitaciones se ha ingresado con exito.",
+					title: "Exito",
+					variant: "success",
+				};
+				this.$refs.toastComponent.makeToast(arrayToast);
+			}
+
 		},
 		limpiaRutAlumno(rut) {
 			let rutAlumno = rut.replace(/\./g, "");
@@ -169,18 +164,17 @@ export default {
 
 			return rutAlumno;
 		},
-		envioDatos(array) {
-			this.libro = array;
+		envioDatos() {
+			this.libro = this.activeLibro;
 		},
-		resetModal(){
-			this.rut = '';
-			this.rutInValido = '';
-			this.fechaEntrega = '';
-			this.error= {
+		resetModal() {
+			this.rut = "";
+			this.rutInValido = "";
+			this.fechaEntrega = "";
+			this.error = {
 				rutAlumno: "",
 				fechaEntrega: "",
 			};
-
 		},
 		capitalizarPalabras(val) {
 			if (val) {

@@ -8,10 +8,12 @@ import VueAxios from 'vue-axios'
 import { BootstrapVue ,BootstrapVueIcons} from 'bootstrap-vue'
 import vSelect from 'vue-select'
 import 'vue-select/dist/vue-select.css';
+import Skeleton from 'vue-loading-skeleton';
+import $ from 'jquery'
 Vue.component('v-select', vSelect)
 
 
-
+Vue.use(Skeleton)
 Vue.use(require('vue-moment'));
 
 import VueApexCharts from 'vue-apexcharts'
@@ -31,7 +33,8 @@ Vue.use(ServerTable,{},false, 'bootstrap4','default');
 
 
 // Agregamos la URL base de nuestra API
-axios.defaults.baseURL = 'http://localhost:8000';
+//axios.defaults.baseURL = 'http://localhost:8000';
+axios.defaults.baseURL = 'https://victor-api2021.herokuapp.com';
 
 
 import VueSidebarMenu from 'vue-sidebar-menu'
@@ -43,7 +46,6 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import '@/assets/css/bootstrap.css'
 import '@/assets/css/icons.min.css'
 import '@/assets/css/app.min.css'
-
 
 
 Vue.config.productionTip = false

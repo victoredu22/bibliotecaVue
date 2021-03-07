@@ -1,5 +1,5 @@
 <template>
-	<b-modal id="modal-pedido" @show="resetModal" @ok="handleEnvio">
+	<b-modal id="modal-nuevoPedido" @show="resetModal" @ok="handleEnvio">
 		<template v-slot:modal-title>
 			<span>Agregar un nuevo pedido libro</span>
 		</template>
@@ -15,7 +15,7 @@
 				>
 					<v-select
 						placeholder="Haz click para seleccionar alumno..."
-						:options="listadoALumno"
+						:options="dataAlumnos"
 						label="dataAlumno"
 						v-model="selectedAlumno"
 						@input="seleccionAlumno(selectedAlumno)"
@@ -53,10 +53,10 @@
 				>
 					<v-select
 						placeholder="Haz click para seleccionar el libro..."
-						:options="listadoLibro"
+						:options="jsonLibros"
 						label="dataLibro"
 						v-model="selectedLibro"
-						@input="seleccionLibro(selectedLibro)"
+						@input="seleccionLibro(selectedLibro.idLibro)"
 					>
 						<template slot="options" slot-scope="options">
 							{{ options.dataLibro }}
@@ -115,9 +115,7 @@ export default {
 		return {
 			alumnos: [],
 			selectedAlumno: "",
-			listadoALumno: [],
 			selectedLibro: "",
-			listadoLibro: [],
 
 			infoAlumno: [],
 			infoLibro: [],
@@ -135,9 +133,12 @@ export default {
 	},
 	computed: {
 		...mapState("pedidos", ["jsonPedido"]),
+		...mapState("alumnos", ["dataAlumnos"]),
+		...mapState("libros", ["jsonLibros"]),
 	},
 	methods: {
 		...mapActions("pedidos", ["updatePedido"]),
+		...mapActions("pedidos", ["addPedido"]),
 		cickCalendario() {
 			this.error.fechaEntrega = false;
 		},
@@ -145,7 +146,7 @@ export default {
 			bvModalEvt.preventDefault();
 			this.sendPedido();
 		},
-		sendPedido() {
+		async sendPedido() {
 			const { idLibro } = this.selectedLibro;
 			const { idAlumno } = this.selectedAlumno;
 			const fechaEntrega = this.fechaEntrega;
@@ -156,101 +157,73 @@ export default {
 				fechaEntrega,
 			};
 
-			this.axios.post(`api/create-pedido`, form).then((res) => {
-				if (res.data.ok === false) {
-					if (res.data.msg == "libroEncontrado") {
-						const arrayToast = {
-							msg: "El alumno ya tiene asignado el libro.",
-							title: "Atención",
-							variant: "warning",
-						}; 
-						this.$refs.toastComponent.makeToast(arrayToast);
-					}
+			const { data } = await this.axios.post(`api/create-pedido`, form);
+			const { errores } = data;
+			const { msg } = data;
+			const { ok } = data;
+			const { pedido } = data;
+			this.error = errores ? errores : { ...this.error };
 
-					if (res.data.msg == "libroSinStock") {
-						const arrayToast = {
-							msg: "Este libro se encuentra sin stock no podemos realizar el pedido.",
-							title: "Atención",
-							variant: "danger",
-						}; 
-						this.$refs.toastComponent.makeToast(arrayToast);
-					}
-
-					if (res.data.errores) {
-						this.error = res.data.errores;
-					}
-				}
-				if (res.data.ok === true) {
-
+			if (!ok) {
+				if (msg == "libroEncontrado") {
 					const arrayToast = {
-						msg: "Felicitaciones se ha ingresado con exito.",
-						title: "Exito",
-						variant: "success",
+						msg: "El alumno ya tiene asignado el libro.",
+						title: "Atención",
+						variant: "warning",
 					};
-					this.variant = "primary";
-					this.msg = `El n° pedido es el ${res.data.pedido.idPedido}`;
 					this.$refs.toastComponent.makeToast(arrayToast);
-					this.infoAlumno.cantidad++;
-					this.infoLibro.cantidad--;
-				
-					const pedido = res.data.pedido;
-
-					//ingreso nuevo pedido a vuex
-					this.jsonPedido.push({
-						idPedido:pedido.idPedido,
-						nombreAlumno: this.infoAlumno.nombre + this.infoAlumno.apellido,
-						nombreLibro:this.infoLibro.nombreLibro,
-						fechaEntrega:this.fechaEntrega,
-						estado:1
-					});
-
-	
 				}
-			});
+				if (msg == "libroSinStock") {
+					const arrayToast = {
+						msg:"Este libro se encuentra sin stock no podemos realizar el pedido.",
+						title: "Atención",
+						variant: "danger",
+					};
+					this.$refs.toastComponent.makeToast(arrayToast);
+				}
+			}
+
+			if (ok) {
+				const arrayToast = {
+					msg: "Felicitaciones se ha ingresado con exito.",
+					title: "Exito",
+					variant: "success",
+				};
+				this.variant = "primary";
+				this.msg = `El n° pedido es el ${pedido.idPedido}`;
+				this.$refs.toastComponent.makeToast(arrayToast);
+				//update variables internas
+				this.infoAlumno.cantidad++;
+				this.infoLibro.cantidad--;
+				this.addPedido({
+					infoAlumno: this.infoAlumno,
+					infoLibro: this.infoLibro,
+					pedido,
+				});
+			}
 		},
-		seleccionAlumno(alumno) {
+		async seleccionAlumno({ idAlumno }) {
 			this.error.idAlumno = false;
-			const { idAlumno } = alumno;
-			this.infoAlumno = this.alumnos.find(
+
+			//Muestra Info Alumno
+			this.infoAlumno = this.dataAlumnos.find(
 				(elem) => elem.idAlumno === idAlumno
 			);
-			this.axios.get(`api/infoPedidoAlumno/${idAlumno}`).then((res) => {
-				const cantidad = res.data.totalPedido;
-				this.cantidadLibros = cantidad;
-			});
+			const { data } = await this.axios.get(
+				`api/infoPedidoAlumno/${idAlumno}`
+			);
+			const { totalPedido } = data;
+			this.cantidadLibros = totalPedido;
 		},
-		seleccionLibro(libro) {
+		async seleccionLibro(idLibro) {
 			this.error.idLibro = false;
-			const { idLibro } = libro;
-			this.axios.get(`api/infoLibroId/${idLibro}`).then((res) => {
-				this.infoLibro = res.data.libro;
-			});
+			const { data } = await this.axios.get(`api/infoLibroId/${idLibro}`);
+			const { libro } = data;
+			
+			this.infoLibro = libro;
 		},
 		onContext(ctx) {
 			this.context = ctx;
-		},
-		loadAlumnos() {
-			this.axios.get("api/alumnos").then((res) => {
-				this.alumnos = res.data.alumnos;
-				const addAlumno = this.alumnos.map((item) =>
-					this.listadoALumno.push({
-						idAlumno: item.idAlumno,
-						dataAlumno: `${item.numeroDocumento} ${item.nombre} ${item.apellido}`,
-					})
-				);
-			});
-		},
-		loadLibros() {
-			this.axios.get("api/libros").then((res) => {
-				const libros = res.data.libros;
-
-				const addLibros = libros.map((item) =>
-					this.listadoLibro.push({
-						idLibro: item.idLibro,
-						dataLibro: `${item.nombreLibro}`,
-					})
-				);
-			});
 		},
 		resetModal() {
 			this.selectedAlumno = "";
@@ -260,16 +233,13 @@ export default {
 			this.infoLibro = [];
 			this.msg = "";
 
-			this.error= {
+			this.error = {
 				rutAlumno: "",
 				fechaEntrega: "",
 			};
 		},
 	},
-	created() {
-		this.loadAlumnos();
-		this.loadLibros();
-	},
+	created() {},
 };
 </script>
 <style scoped>

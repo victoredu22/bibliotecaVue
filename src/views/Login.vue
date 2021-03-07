@@ -86,7 +86,7 @@ export default {
 					this.makeToast('danger',response.data.error);
 				}
 				else{
-          var token = 'Bearer '+ response.data.token;
+          var token = 'Bearer '+ response.data.token.original.access_token;
 					//var user = response.data.token.original.user;	
 					this.setAccessToken(token);
           router.push({name:'index'});    

@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import libros from "./modules/libros";
 import menu from "./modules/menu";
 import pedidos from "./modules/pedidos";
+import alumnos from "./modules/alumnos";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -41,6 +42,7 @@ export default new Vuex.Store({
 	modules: {
 		libros,
 		menu,
-		pedidos
+		pedidos,
+		alumnos
 	},
 });

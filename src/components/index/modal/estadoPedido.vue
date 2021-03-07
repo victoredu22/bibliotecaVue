@@ -55,10 +55,9 @@
 import { mapActions, mapState } from "vuex";
 import toastComponent from "@/components/toastComponent";
 
-
 export default {
 	components: {
-		toastComponent
+		toastComponent,
 	},
 	data() {
 		return {
@@ -77,43 +76,43 @@ export default {
 	},
 	computed: {
 		...mapState("pedidos", ["jsonPedido"]),
+		...mapState("pedidos", ["active"]),
 	},
 	methods: {
 		...mapActions("pedidos", ["updatePedido"]),
-		sendPedido(data) {
-			this.pedido = data;
+		...mapActions("pedidos", ["updateEstado"]),
+		sendPedido() {
+			this.pedido = this.active;
 			const { estado } = this.pedido;
 			this.selected = estado == 1 ? 1 : 2;
-			console.log(this.pedido);
 		},
 		handleEnvio(bvModalEvt) {
-			this.updateEstado();
+			// Prevent modal from closing
 			bvModalEvt.preventDefault();
+			this.formEstado();
 		},
-		updateEstado() {
+		async formEstado() {
 			const form = {
 				idPedido: this.pedido.idPedido,
 				estado: this.selected,
 			};
-			this.axios.post(`api/updateEstadoLibro`, form).then((res) => {
-				const arrayToast = {
-					msg: `Felicitaciones el estado ha cambiado a ${
-						this.selected == 1 ? "Pendiente" : "Entregado"
-					} `,
-					title: "Exito",
-					variant: "success",
-				};
-				this.$refs.toastComponent.makeToast(arrayToast);
-
-				const pedido = this.jsonPedido.find(
-					(elem) => elem.idPedido == this.pedido.idPedido
-				);
-				pedido.estado = this.selected;
-			});
+			const { data } = await this.axios.post(
+				`api/updateEstadoLibro`,
+				form
+			);
+			const { updatePedido: pedido } = data;
+			this.updateEstado(pedido);
+			const arrayToast = {
+				msg: `Felicitaciones el estado ha cambiado a ${
+					this.selected == 1 ? "Pendiente" : "Entregado"
+				} `,
+				title: "Exito",
+				variant: "success",
+			};
+			this.$refs.toastComponent.makeToast(arrayToast);
 		},
 		resetModal() {},
 	},
-	created() {},
 };
 </script>
 <style scoped>
