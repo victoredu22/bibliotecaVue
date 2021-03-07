@@ -1,7 +1,7 @@
 # Panel biblioteca
 ## Comenzando 🚀
   Te dejo una [url](https://victor-biblioteca2021.herokuapp.com/) para ver el funcionamiento del aplicativo._
-  ****Credenciales****
+  **Credenciales**
   rut: 17708532-4
   contraseña:123
 ## Url - Api
