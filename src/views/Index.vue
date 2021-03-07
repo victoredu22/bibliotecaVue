@@ -72,6 +72,7 @@ export default {
     async loadAlumnos() {
 			const {data} = await this.axios.get('api/alumnos');
 			const {alumnos} = data;
+
 			this.uploadAlumnos(alumnos);
 		},
     async loadLibros() {

@@ -15,10 +15,10 @@
 		</div>
 		<div class="col-xl-4">
 			<b-alert show variant="warning">
-				<PuSkeleton v-if="cargaDatos" :count="3" />
+				<PuSkeleton v-if="!dataAlumnos.length > 0" :count="3" />
 				<div  v-else class="alerta"> 
 				<h4 class="alert-heading">
-					{{ totalAlumnos }} Alumnos totales.
+					{{ dataAlumnos.length }} Alumnos totales.
 				</h4>
 				<p>
 					Totalidad de alumnos inscritos en el sistema. recuerda
@@ -30,10 +30,11 @@
 		</div>
 		<div class="col-xl-4">
 			<b-alert show variant="success">
-				<PuSkeleton v-if="cargaDatos" :count="2" />
+	
+				<PuSkeleton v-if="!jsonLibros.length > 0" :count="2" />
 				<div  v-else class="alerta"> 
 					<h4 class="alert-heading">
-						{{ totalLibros }} Libros en el sistema.
+						{{ jsonLibros.reduce((a, b) => a + b.cantidad, 0) }} Libros en el sistema.
 					</h4>
 					<p>
 						Totalidad de libros en el sistema de biblioteca.
@@ -44,6 +45,7 @@
 	</div>
 </template>
 <script>
+import { mapActions, mapState } from "vuex";
 export default {
 	data: () => ({
 		totalLibros: "",
@@ -51,19 +53,14 @@ export default {
 		totalPedidos: "",
 	}),
 	computed:{
+		...mapState("alumnos", ["dataAlumnos"]),
+		...mapState("libros", ["jsonLibros"]),
 		cargaDatos(){
 			return (this.totalPedidos.length != "") ? false : true; 
 		}
 	},
 	methods: {
 		async loadInfo() {
-			const { data: dataLibros } = await this.axios.get("api/libros");
-			const { libros } = dataLibros;
-			this.totalLibros = libros.reduce((a, b) => a + b.cantidad, 0);
-
-			const { data: dataAlumnos } = await this.axios.get("api/alumnos");
-			const { alumnos } = dataAlumnos;
-			this.totalAlumnos = alumnos.length;
 
 			const { data: dataPedidos } = await this.axios.get(
 				"api/pedidosMes"
