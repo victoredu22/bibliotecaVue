@@ -58,13 +58,18 @@ export default {
     ...mapActions('alumnos',['uploadAlumnos']),
     ...mapActions("pedidos", ["updatePedido"]),
     ...mapActions('libros',['uploadDataLibros']),
+		...mapActions("menu", ["updateMenu"]),
+		...mapActions("menu", ["updateTitulo"]),
+		
 		async loadData() {
 			const { data } = await this.axios.get("api/pedidosRecientes");
 			const { getPedido: librosPedidos } = data;
+			console.log(librosPedidos);
 
 			const pedidosJson = librosPedidos.map((item) => ({
 				nombreAlumno: `${item.nombre} ${item.apellido}`,
 				...item,
+				fechaEntrega: this.fechaConversion(item.fechaEntrega)
 			}));
 
 			this.updatePedido(pedidosJson);
@@ -80,6 +85,14 @@ export default {
 			const {libros} = data;
 			this.uploadDataLibros(libros);
 		},
+		fechaConversion(fechaCurso) {
+			var objDate = new Date(fechaCurso);
+			let dia = objDate.toLocaleDateString("es-ES", { day: "numeric" }),
+				mes = objDate.toLocaleDateString("es-ES", { month: "long" }),
+				año = objDate.toLocaleDateString("es-ES", { year: "numeric" });
+
+			return dia + " " + mes + " " + año;
+		},
 		currentDateTime() {
 			return moment().format("LL");
 		},
@@ -88,6 +101,17 @@ export default {
     this.loadData();
     this.loadAlumnos();
     this.loadLibros();
+		let menu = [
+			{
+				urlTolbar: "index",
+				nameToolbar: "Inicio",
+			},
+		];
+		let titulo = "Home";
+
+		this.updateTitulo(titulo);
+		this.updateMenu(menu);
+
   }
 };
 </script>

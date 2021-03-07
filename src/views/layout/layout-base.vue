@@ -56,14 +56,48 @@
 
 			<!-- Left Sidebar End -->
 
-			<div class="main-content" style="width: calc(70); !important">
-				<div class="page-content" style="margin-top:2%">
-					<!-- end page title end breadcrumb -->
-					<router-view></router-view>
+			<div
+				class="main-content"
+				style="width: calc(60); !important; margin-top: 1%;margin-left: 12% !important;"
+			>
+				<div
+					class="page-title-box"
+					style="padding: 35px 0px 45px 0px !important; margin: 0 -3% !important;"
+				>
+					<div class="container-fluid" style="max-width: 90%;">
+						<div class="row align-items-center">
+							<div class="col-md-8" style="    margin-top: 37px;">
+								<h4 class="page-title mb-1">
+									{{ jsonTitulo }}
+								</h4>
+								<ol class="breadcrumb m-0">
+									<li
+										class="breadcrumb-item active"
+										v-for="(menu, index) in this.jsonMenu"
+										:key="index"
+									>
+										<router-link
+											:to="{ path: '/' + menu.urlTolbar }"
+										>
+											{{ menu.nameToolbar }}
+										</router-link>
+									</li>
+								</ol>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Page-Title -->
+				<div class="page-content-wrapper">
+					<div class="container-fluid">
+						<!-- end page title end breadcrumb -->
+						<router-view></router-view>
+					</div>
 				</div>
 				<br />
 				<br />
-				<footer class="footer">
+				<footer class="footer" style="left: 12% !important;">
 					<div class="container-fluid">
 						<div class="row">
 							<div class="col-sm-12">

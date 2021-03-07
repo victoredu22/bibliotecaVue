@@ -9,45 +9,45 @@
 					<p class="text-muted">
 						Libros que no tienen stock en el sistema
 					</p>
-					<PuSkeleton v-if="tablaLibro" :count="5" />
+
+					<PuSkeleton v-if="!this.jsonLibros.length > 0" :count="5" />
 					<b-table
 						v-else
 						striped
 						hover
-						:items="itemsLibro"
+						:items="librosSinstock"
 						:fields="fieldsLibro"
-					></b-table>
+					>
+						<template #cell(id_libro)="data">
+							{{ data.item.idLibro }}
+						</template>
+						<template #cell(nombre_libro)="data">
+							{{ data.item.nombreLibro }}
+						</template>
+						<template #cell(cantidad)>
+							Sin Stock
+						</template>
+					</b-table>
 				</div>
 			</div>
 		</div>
 	</div>
 </template>
 <script>
+import { mapState, mapActions } from "vuex";
 export default {
 	data: () => ({
 		itemsLibro: [],
-		fieldsLibro: [],
+		fieldsLibro: ["id_libro", "nombre_libro", "cantidad"],
 	}),
 	computed: {
 		tablaLibro() {
 			return this.itemsLibro.length > 0 ? false : true;
 		},
-	},
-	methods: {
-		async loadDataStock() {
-			const { data } = await this.axios.get("api/librosSinStock");
-			const { librosSinStock } = data;
-			const fieldsLibro = ["id_libro", "nombre_libro", "cantidad"];
-
-			this.itemsLibro = librosSinStock.map((elem) => ({
-				id_libro: elem.idLibro,
-				nombre_libro: elem.nombreLibro,
-				cantidad: elem.cantidad,
-			}));
+		librosSinstock() {
+			return this.jsonLibros.filter((libro) => libro.cantidad === 0);
 		},
-	},
-	created() {
-		this.loadDataStock();
+		...mapState("libros", ["jsonLibros"]),
 	},
 };
 </script>

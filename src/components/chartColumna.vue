@@ -15,12 +15,9 @@ export default {
 			series: [
 				{
 					name: "Pedidos",
-					data: [
-
-					],
+					data: [],
 				},
 			],
-
 
 			chartOptions: {
 				chart: {
@@ -110,12 +107,14 @@ export default {
 			},
 		};
 	},
-	methods:{
-		sendDatos(data,categories){
-			const addSeries = data.map(item => this.series[0].data.push(item));
+	methods: {
+		sendDatos(data, categories) {
+			const addSeries = data.map((item) =>
+				this.series[0].data.push(item)
+			);
 
 			console.log(this.series[0].data);
-		}
-	}
+		},
+	},
 };
 </script>
