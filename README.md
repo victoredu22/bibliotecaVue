@@ -1,11 +1,12 @@
 # Panel biblioteca
-# Url - Qa
-  Esta [url](https://victor-biblioteca2021.herokuapp.com/) es solamente para ver el funcionamiento del aplicativo y solo sirve de pruebas
-# Url - Api
-  La [url](https://victor-api2021.herokuapp.com/) de la api es
+## Comenzando 🚀
+  Te dejo una [url](https://victor-biblioteca2021.herokuapp.com/) para ver el funcionamiento del aplicativo.
   ****Credenciales****
   rut: 17708532-4
   contraseña:123
+## Url - Api
+  La [url](https://victor-api2021.herokuapp.com/) de la api es
+ 
 ## Project setup
 ```
 npm install
