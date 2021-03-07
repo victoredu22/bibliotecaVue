@@ -1,5 +1,5 @@
 # Panel biblioteca
-  _Esta es una aplicación que nos ayuda a a tener un control de los alumnos cuando soliciten libros.
+  Este es una aplicación que nos ayuda a a tener un control de los alumnos cuando soliciten libros.
 ## Comenzando 🚀
 
 _Te dejo una [url](https://victor-biblioteca2021.herokuapp.com/) para ver el funcionamiento del aplicativo._
