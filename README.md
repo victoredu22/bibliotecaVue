@@ -2,10 +2,10 @@
 ## Comenzando 🚀
 _Te dejo una [url](https://victor-biblioteca2021.herokuapp.com/) para ver el funcionamiento del aplicativo._
 
-  Las **Credenciales 🔑**._
-  _rut: 17708532-4
-  _contraseña:123
- 
+  🔑 Las **Credenciales **.<br>
+  rut: 17708532-4<br>
+  contraseña:123<br>
+  
 ## Url - Api
   La [url](https://victor-api2021.herokuapp.com/) de la api es
  
