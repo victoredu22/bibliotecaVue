@@ -1,11 +1,8 @@
 # Panel biblioteca
 ## Comenzando 🚀
-_Estas instrucciones te permitirán obtener una copia del proyecto en funcionamiento en tu máquina local para propósitos de desarrollo y pruebas._
 
-Mira **Deployment** para conocer como desplegar el proyecto.
-
-  Te dejo una [url](https://victor-biblioteca2021.herokuapp.com/) para ver el funcionamiento del aplicativo._
-  **Credenciales**
+  _Te dejo una [url](https://victor-biblioteca2021.herokuapp.com/) para ver el funcionamiento del aplicativo._
+  Las **Credenciales 🔑**
   rut: 17708532-4
   contraseña:123
 ## Url - Api
