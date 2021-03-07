@@ -22,7 +22,7 @@ npm run serve
 
 _Las herramientas que se han ocupado para construir esta app_
 
-* [Vue 2.0](https://vuejs.org/v2/guide/) - El framework web usado
+* [Vue 2.0](https://vuejs.org/v2/guide/) - El framework js usado
 * [Boostrap vue](https://bootstrap-vue.org/docs/components) - Framework css ocupado
 * [Heroku](https://www.heroku.com/) - Cloud que me ayuda a subir mis plataformas sin gastar dinero :D.
 
