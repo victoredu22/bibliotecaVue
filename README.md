@@ -1,10 +1,11 @@
 # Panel biblioteca
 ## Comenzando 🚀
+_Te dejo una [url](https://victor-biblioteca2021.herokuapp.com/) para ver el funcionamiento del aplicativo._
 
-  _Te dejo una [url](https://victor-biblioteca2021.herokuapp.com/) para ver el funcionamiento del aplicativo._
-  Las **Credenciales 🔑**
-  rut: 17708532-4
-  contraseña:123
+  Las **Credenciales 🔑**._
+  _rut: 17708532-4
+  _contraseña:123
+ 
 ## Url - Api
   La [url](https://victor-api2021.herokuapp.com/) de la api es
  
