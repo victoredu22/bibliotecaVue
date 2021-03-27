@@ -28,6 +28,7 @@ export default {
   },
   created(){
     this.cargaTabla();
+    console.log(this.$route.name);
   }
 };
 </script>

@@ -5,17 +5,13 @@
 				<h5 class="header-title mb-4">
 					Libros mas pedidos ultimamente
 				</h5>
-			</div>
-			<p class="text-muted">
-				Libros que no tienen stock en el sistema
-			</p>
-		
+			</div>		
 			<PuSkeleton v-if="tablaPedidos" :count="2"/> 
 			<div class="row" >
 				<apexchart
 					v-if="carga"
 					type="pie"
-					width="400"
+					width="350"
 					:options="chartOptions"
 					:series="series"
 				></apexchart>

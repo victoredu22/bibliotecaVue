@@ -12,7 +12,7 @@ import Skeleton from 'vue-loading-skeleton';
 import $ from 'jquery'
 Vue.component('v-select', vSelect)
 
-
+import '@fortawesome/fontawesome-free/js/all.js';
 Vue.use(Skeleton)
 Vue.use(require('vue-moment'));
 
@@ -36,17 +36,18 @@ Vue.use(ServerTable,{},false, 'bootstrap4','default');
 //axios.defaults.baseURL = 'http://localhost:8000';
 axios.defaults.baseURL = 'https://victor-api2021.herokuapp.com';
 
-
+/* 
 import VueSidebarMenu from 'vue-sidebar-menu'
 import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
 Vue.use(VueSidebarMenu)
+ */
 
-
+import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import '@/assets/css/bootstrap.css'
-import '@/assets/css/icons.min.css'
+/* import '@/assets/css/bootstrap.css' */
+import '@/assets/css/icons.min.css' 
 import '@/assets/css/app.min.css'
-
+ 
 
 Vue.config.productionTip = false
 

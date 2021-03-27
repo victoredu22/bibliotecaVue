@@ -7,12 +7,14 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.3",
     "apexcharts": "^3.22.1",
     "axios": "^0.19.2",
     "bootstrap": "^4.5.0",
     "bootstrap-vue": "^2.16.0",
     "core-js": "^3.6.5",
     "express": "^4.17.1",
+    "font-awesome": "^4.7.0",
     "jquery": "^3.5.1",
     "metismenujs": "^1.2.1",
     "moment": "^2.29.1",

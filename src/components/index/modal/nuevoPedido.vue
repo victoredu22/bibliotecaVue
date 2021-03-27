@@ -1,8 +1,10 @@
 <template>
 	<b-modal id="modal-nuevoPedido" @show="resetModal" @ok="handleEnvio">
 		<template v-slot:modal-title>
-			<span>Agregar un nuevo pedido libro</span>
+		 <h5 class="modal-title">Modal title</h5>
+
 		</template>
+
 		<div class="media">
 			<div class="media-body">
 				<b-alert v-if="msg.length > 0" show :variant="variant">

@@ -9,13 +9,14 @@
 								Tabla de pedidos en el año
 							</h5>
 						</div>
-						<div class="col-xl-2">
+						<div class="col-xl-2 ">
 							<b-button
+								class="w-100"
 								variant="outline-info"
 								v-b-modal.modal-nuevoPedido
 							>
 								<i class="fas fa-plus"></i>
-								Nuevo pedido libro
+								Crear pedido
 							</b-button>
 						</div>
 					</div>
@@ -93,3 +94,7 @@ export default {
 	},
 };
 </script>
+<style scoped>
+
+
+</style>

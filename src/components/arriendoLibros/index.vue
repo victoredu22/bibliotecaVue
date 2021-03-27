@@ -1,7 +1,7 @@
 <template>
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-9">
+			<div class="col-md-9 mb-4">
 				<div class="card">
 					<div class="card-body">
 						<h5 class="header-title mb-4">
@@ -40,7 +40,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-3">
+			<div class="col-md-3">
 				<div class="card">
 					<div class="card-body">
 						<h5 class="header-title mb-4">
@@ -53,7 +53,7 @@
 						</p>
 						<b-button
 							v-b-modal.modal-nuevoLibro
-							block
+							class="w-100"
 							variant="outline-info"
 						>
 							<i class="far fa-plus-square"></i>

@@ -2,12 +2,13 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import LoginLayout from "../views/layout/layout-login.vue";
 import BaseLayout from "../views/layout/layout-base.vue";
+import BaseLayout2 from '../views/layout/layout-base2.vue'
 import store from "../store";
 import axios from "axios";
-import '@/assets/css/adminlte.min.css'
+/* import '@/assets/css/adminlte.min.css'
 
 
-
+ */
 Vue.use(VueRouter);
 function guard(to, from, next) {
 	if (store.state.autenticado == "true" || store.state.autenticado) {
@@ -35,16 +36,23 @@ const router = new VueRouter({
 			beforeEnter: verifyAutenticado,
 		},
 		{
+			path:"/nuevoLayout",
+			name:'nuevoLayout',
+			meta:{layout:BaseLayout2},
+			component: () => import("../components/hola.vue"),
+			beforeEnter: verifyAutenticado,
+		},
+		{
 			path: "/index",
 			name: "index",
-			meta: { layout: BaseLayout },
+			meta: { layout: BaseLayout2 },
 			component: () => import("../views/Index.vue"),
 			beforeEnter: guard
 		},
 		{
 			path: "/ingreso-libros",
 			name: "ingreso-Libros",
-			meta: { layout: BaseLayout },
+			meta: { layout: BaseLayout2 },
 			component: () => import("../views/arriendoLibros.vue"),
 			beforeEnter: guard
 		},
