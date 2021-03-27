@@ -5,10 +5,10 @@
 				<PuSkeleton v-if="cargaDatos" :count="2" />
 				<div  v-else class="alerta"> 
 					<h4 class="alert-heading">
-						{{ totalPedidos }} Pedidos este mes.
+						{{ pedidoMes.length }} Pedidos este mes.
 					</h4>
 					<p>
-						Totalidad de pedidos en el sistema este mes
+						Totalidad de libros solicitados este mes
 					</p>
 				</div>
 			</b-alert>
@@ -45,33 +45,17 @@
 	</div>
 </template>
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapState } from "vuex";
 export default {
 	data: () => ({
-		totalLibros: "",
-		totalAlumnos: "",
-		totalPedidos: "",
 	}),
 	computed:{
 		...mapState("alumnos", ["dataAlumnos"]),
 		...mapState("libros", ["jsonLibros"]),
+		...mapState("pedidos",['pedidoMes']),
 		cargaDatos(){
-			return (this.totalPedidos.length != "") ? false : true; 
+			return (this.pedidoMes.length != "") ? false : true; 
 		}
-	},
-	methods: {
-		async loadInfo() {
-
-			const { data: dataPedidos } = await this.axios.get(
-				"api/pedidosMes"
-			);
-			const { getPedidos } = dataPedidos;
-			this.totalPedidos = getPedidos.length;
-
-		},
-	},
-	mounted() {
-		this.loadInfo();
 	},
 };
 </script>
