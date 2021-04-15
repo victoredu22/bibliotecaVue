@@ -33,8 +33,8 @@ Vue.use(ServerTable,{},false, 'bootstrap4','default');
 
 
 // Agregamos la URL base de nuestra API
-//axios.defaults.baseURL = 'http://localhost:8000';
-axios.defaults.baseURL = 'https://victor-api2021.herokuapp.com';
+axios.defaults.baseURL = 'http://localhost:8000';
+//axios.defaults.baseURL = 'https://victor-api2021.herokuapp.com';
 
 /* 
 import VueSidebarMenu from 'vue-sidebar-menu'

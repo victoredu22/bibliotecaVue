@@ -33,35 +33,30 @@ const router = new VueRouter({
 			name: "login",
 			meta: { layout: LoginLayout },
 			component: () => import("../views/Login.vue"),
-			beforeEnter: verifyAutenticado,
 		},
 		{
 			path:"/nuevoLayout",
 			name:'nuevoLayout',
 			meta:{layout:BaseLayout2},
 			component: () => import("../components/hola.vue"),
-			beforeEnter: verifyAutenticado,
 		},
 		{
 			path: "/index",
 			name: "index",
 			meta: { layout: BaseLayout2 },
 			component: () => import("../views/Index.vue"),
-			beforeEnter: guard
 		},
 		{
 			path: "/ingreso-libros",
 			name: "ingreso-Libros",
 			meta: { layout: BaseLayout2 },
 			component: () => import("../views/arriendoLibros.vue"),
-			beforeEnter: guard
 		},
 		{
 			path: "/nuevo-pedido",
 			name: "nuevo-pedido",
 			meta: { layout: BaseLayout },
 			component: () => import("../views/pedidoLibros.vue"),
-			beforeEnter: guard
 		},
 	],
 });

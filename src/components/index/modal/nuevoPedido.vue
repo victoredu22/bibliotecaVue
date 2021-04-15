@@ -54,6 +54,7 @@
 					style="margin-top:20px"
 				>
 					<v-select
+						class="form-select"
 						placeholder="Haz click para seleccionar el libro..."
 						:options="jsonLibros"
 						label="dataLibro"

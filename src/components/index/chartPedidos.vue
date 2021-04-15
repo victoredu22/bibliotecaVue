@@ -10,8 +10,8 @@
 			<div class="row" >
 				<apexchart
 					v-if="carga"
-					type="pie"
-					width="350"
+					type="donut"
+					width="500px"
 					:options="chartOptions"
 					:series="series"
 				></apexchart>
@@ -31,8 +31,8 @@ export default {
 		//series: [1, 1],
 		chartOptions: {
 			chart: {
-				width: 500,
-				type: "pie",
+				width: 300,
+				type: "donut",
 			},
 			labels: [],
 			//labels: ['Team A', 'Team B'],
@@ -44,7 +44,7 @@ export default {
 							width: 200,
 						},
 						legend: {
-							position: "bottom",
+							position: "top",
 						},
 					},
 				},
@@ -74,3 +74,6 @@ export default {
 	},
 };
 </script>
+<style scoped>
+
+</style>

@@ -77,6 +77,9 @@ export default {
 				solid: true
 			})
 		},
+		envioSinApi(){
+			router.push({name:'index'});
+		},
 		envioForm(){
 			this.msgError = false;
         this.axios.post('api/login', {
@@ -92,7 +95,7 @@ export default {
 				}
 				else{
           var token = 'Bearer '+ response.data.token.original.access_token;
-					//var user = response.data.token.original.user;	
+					var user = response.data.token.original.user;	
 					this.setAccessToken(token);
           router.push({name:'index'});    
 				}
