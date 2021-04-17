@@ -27,11 +27,11 @@
               <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <!-- <b-avatar
+                    <b-avatar
                       variant="warning"
                       :text="usuario.iniciales"
                     ></b-avatar>
-                    {{usuario.nombre}} {{usuario.apellido}}  -->
+                    {{usuario.nombre}} {{usuario.apellido}} 
                   </a>
 
                   <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

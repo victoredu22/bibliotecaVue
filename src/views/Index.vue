@@ -8,7 +8,7 @@
 							<div class="col-6">
 								<h4>
 									<i class="fas fa-university"></i>
-									Colegio Cumbre
+									Colegio Cumbres
 								</h4>
 								<p class="text-muted">
 									{{ currentDateTime() }}

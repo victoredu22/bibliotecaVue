@@ -26,9 +26,9 @@
 							class="m-2"
 							variant="primary"
 						>
-						<!-- 	<template #button-content>
+							<template #button-content>
 								{{ usuario.nombre }} {{ usuario.apellido }}
-							</template> -->
+							</template>
 
 							<b-dropdown-item
 								href="#"

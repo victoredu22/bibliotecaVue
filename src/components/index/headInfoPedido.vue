@@ -2,8 +2,7 @@
 	<div class="row">
 		<div class="col-md-4">
 			<b-alert show variant="info">
-				<PuSkeleton v-if="cargaDatos" :count="2" />
-				<div  v-else class="alerta"> 
+				<div class="alerta"> 
 					<h4 class="alert-heading">
 						{{ pedidoMes.length }} Pedidos este mes.
 					</h4>
@@ -15,8 +14,7 @@
 		</div>
 		<div class="col-md-4">
 			<b-alert show variant="warning">
-				<PuSkeleton v-if="!dataAlumnos.length > 0" :count="3" />
-				<div  v-else class="alerta"> 
+				<div class="alerta"> 
 				<h4 class="alert-heading">
 					{{ dataAlumnos.length }} Alumnos totales.
 				</h4>
@@ -30,9 +28,7 @@
 		</div>
 		<div class="col-md-4">
 			<b-alert show variant="success">
-	
-				<PuSkeleton v-if="!jsonLibros.length > 0" :count="2" />
-				<div  v-else class="alerta"> 
+				<div  class="alerta"> 
 					<h4 class="alert-heading">
 						{{ jsonLibros.reduce((a, b) => a + b.cantidad, 0) }} Libros en el sistema.
 					</h4>

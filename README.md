@@ -2,7 +2,7 @@
   Este es una aplicación que nos ayuda a a tener un control de los alumnos cuando soliciten libros.
 ## Comenzando 🚀
 
-_Te dejo una [url](https://victor-biblioteca2021.herokuapp.com/) para ver el funcionamiento del aplicativo._
+_Te dejo una [url](https://biblioteca-vue.vercel.app/) para ver el funcionamiento del aplicativo._
 
   Las **Credenciales **.<br>
   rut: 17708532-4<br>
@@ -31,4 +31,4 @@ _Las herramientas que se han ocupado para construir esta app_
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 
-⌨️ con ❤️ por [victoredu22](https://github.com/victoredu22) 😊
+⌨️ con ❤️ por [victoredu22](https://github.com/victoredu22)

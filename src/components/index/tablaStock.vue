@@ -10,7 +10,7 @@
 						Libros que no tienen stock en el sistema
 					</p>
 
-					<PuSkeleton v-if="!this.jsonLibros.length > 0" :count="5" />
+					<b-alert v-if="librosSinstock.length === 0" show variant="info">No se encuentran libros sin stock.</b-alert>
 					<b-table
 						v-else
 						striped
