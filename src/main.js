@@ -36,6 +36,7 @@ Vue.use(ServerTable,{},false, 'bootstrap4','default');
 //axios.defaults.baseURL = 'http://localhost:8000';
 axios.defaults.baseURL = 'http://104.236.211.192';
 
+
 /* 
 import VueSidebarMenu from 'vue-sidebar-menu'
 import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
