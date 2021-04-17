@@ -34,7 +34,7 @@ Vue.use(ServerTable,{},false, 'bootstrap4','default');
 
 // Agregamos la URL base de nuestra API
 //axios.defaults.baseURL = 'http://localhost:8000';
-axios.defaults.baseURL = 'http://104.236.211.192';
+axios.defaults.baseURL = 'https://api.cumbresanramon.cl/';
 
 
 /* 
