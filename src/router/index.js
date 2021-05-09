@@ -40,7 +40,7 @@ const router = new VueRouter({
 			name:'nuevoLayout',
 			meta:{layout:BaseLayout2},
 			component: () => import("../components/hola.vue"),
-			beforeEnter: verifyAutenticado,
+			beforeEnter: guard,
 		},
 		{
 			path: "/index",

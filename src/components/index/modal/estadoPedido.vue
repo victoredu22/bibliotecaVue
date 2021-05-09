@@ -1,7 +1,7 @@
 <template>
 	<b-modal id="modal-estadoPedido" @show="resetModal" @ok="handleEnvio">
 		<template v-slot:modal-title>
-			<span>Agregar un nuevo pedido libro</span>
+			<span>Cambiar el estado del pedido</span>
 		</template>
 		<div class="media">
 			<div dir="ltr" class="ml-2">
@@ -16,12 +16,11 @@
 			<div class="media-body" style="margin-left:20px">
 				<h4>{{ pedido.nombreLibro }}</h4>
 				<li class="liNone">
-					Nombre Libro :
+					Nombre Alumno :
 					<span class="spanGreen">{{ pedido.nombreAlumno }}</span>
 				</li>
 				<li class="liNone">
-					Fecha Entrega :
-					<span class="spanGreen">
+					Fecha Entrega Estimada:					<span class="spanGreen">
 						{{ pedido.fechaEntrega }}
 					</span>
 				</li>
@@ -79,8 +78,9 @@ export default {
 		...mapState("pedidos", ["active"]),
 	},
 	methods: {
-		...mapActions("pedidos", ["updatePedido"]),
 		...mapActions("pedidos", ["updateEstado"]),
+		...mapActions("pedidos",["changeActivePedido"]),
+		...mapActions("pages",["updateEstadoPedido"]),
 		sendPedido() {
 			this.pedido = this.active;
 			const { estado } = this.pedido;
@@ -101,7 +101,10 @@ export default {
 				form
 			);
 			const { updatePedido: pedido } = data;
-			this.updateEstado(pedido);
+			this.updateEstadoPedido(pedido);
+			this.changeActivePedido(pedido);
+			
+			
 			const arrayToast = {
 				msg: `Felicitaciones el estado ha cambiado a ${
 					this.selected == 1 ? "Pendiente" : "Entregado"

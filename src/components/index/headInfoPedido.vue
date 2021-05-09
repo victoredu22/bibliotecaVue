@@ -1,6 +1,6 @@
 <template>
 	<div class="row">
-		<div class="col-md-4">
+		<div class="col-md-12">
 			<b-alert show variant="info">
 				<div class="alerta"> 
 					<h4 class="alert-heading">
@@ -12,7 +12,7 @@
 				</div>
 			</b-alert>
 		</div>
-		<div class="col-md-4">
+<!-- 		<div class="col-md-12">
 			<b-alert show variant="warning">
 				<div class="alerta"> 
 				<h4 class="alert-heading">
@@ -25,8 +25,8 @@
 				</div>
 			</b-alert>
 			
-		</div>
-		<div class="col-md-4">
+		</div> -->
+		<div class="col-md-12">
 			<b-alert show variant="success">
 				<div  class="alerta"> 
 					<h4 class="alert-heading">

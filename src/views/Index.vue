@@ -26,26 +26,24 @@
 						</div>
 					</div>
 				</div>
+				<br>
+				<headPedido />
+				<chartPedidos />
+				<tablasStock class="mt-2 mb-2"/>
+				
 			</div>
 			<div class="col-md-9">
-				<headPedido />
+				<pedidoAnual />
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-xl-3">
-					<chartPedidos />
-					<tablasStock class="mt-2 mb-2"/>
-			</div>
-			<div class="col-xl-9">
-				<tablaPedidoAnual />
-			</div>
-		</div> 
+
 
 	</div>
 </template>
 <script>
 import { mapActions, mapState } from "vuex";
 import tablaPedidoAnual from "../components/index/tablaPedidosAnual";
+import pedidoAnual from '../components/index/pedidos/tablaPedido'
 import moment from "moment";
 import chartPedidos from "../components/index/chartPedidos";
 import tablasStock from '../components/index/tablaStock';
@@ -56,7 +54,8 @@ export default {
 		tablaPedidoAnual,
     chartPedidos,
     tablasStock,
-    headPedido
+    headPedido,
+		pedidoAnual
 	},
 	data() {
 		return {};
@@ -124,8 +123,8 @@ export default {
 
 		this.updateTitulo(titulo);
 		this.updateMenu(menu);
-		
-    
+
+
   }
 };
 </script>

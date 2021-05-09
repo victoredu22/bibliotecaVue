@@ -14,7 +14,15 @@ Vue.component('v-select', vSelect)
 
 import '@fortawesome/fontawesome-free/js/all.js';
 Vue.use(Skeleton)
-Vue.use(require('vue-moment'));
+
+
+
+import moment from 'moment'
+Vue.prototype.moment = moment
+require('moment/locale/es')
+
+
+
 
 import VueApexCharts from 'vue-apexcharts'
 Vue.use(VueApexCharts)
@@ -31,10 +39,11 @@ import {ServerTable, ClientTable} from 'vue-tables-2';
 Vue.use(ClientTable,{},false, 'bootstrap4','default');
 Vue.use(ServerTable,{},false, 'bootstrap4','default');
 
+import "animate.css";
 
 // Agregamos la URL base de nuestra API
-//axios.defaults.baseURL = 'http://localhost:8000';
-axios.defaults.baseURL = 'https://api.cumbresanramon.cl/';
+axios.defaults.baseURL = 'http://localhost:8000';
+//axios.defaults.baseURL = 'https://api.cumbresanramon.cl/';
 
 
 /* 

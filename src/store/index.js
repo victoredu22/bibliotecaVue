@@ -4,6 +4,7 @@ import libros from "./modules/libros";
 import menu from "./modules/menu";
 import pedidos from "./modules/pedidos";
 import alumnos from "./modules/alumnos";
+import pages from "./modules/pages";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -43,6 +44,7 @@ export default new Vuex.Store({
 		libros,
 		menu,
 		pedidos,
-		alumnos
+		alumnos,
+		pages
 	},
 });

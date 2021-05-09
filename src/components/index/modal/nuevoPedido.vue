@@ -1,7 +1,7 @@
 <template>
 	<b-modal id="modal-nuevoPedido" @show="resetModal" @ok="handleEnvio">
 		<template v-slot:modal-title>
-		 <h5 class="modal-title">Modal title</h5>
+		 <h5 class="modal-title">Creación nuevo pedido</h5>
 
 		</template>
 

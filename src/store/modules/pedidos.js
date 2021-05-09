@@ -14,6 +14,9 @@ export default {
 				(pedido) => pedido.idPedido === payload
 			);
 		},
+		changePedido(state,payload){
+			state.active.estado = payload.estado
+		},
 		updateEstado(state, payload) {
 			state.jsonPedido = state.jsonPedido.map((pedido) =>
 				pedido.idPedido === payload.idPedido
@@ -41,6 +44,9 @@ export default {
 		},
 		activePedido({ commit }, payload) {
 			commit("activePedido", payload);
+		},
+		changeActivePedido({commit},payload){
+			commit("changePedido",payload)
 		},
 		updateEstado({ commit }, payload) {
 			commit("updateEstado", payload);

@@ -1,26 +1,19 @@
 <template>
 	<div class="card">
 		<div class="card-body">
-			<div class="row">
+			<div class="col-md-12">
 				<h5 class="header-title mb-4">
 					Libros mas pedidos ultimamente
 				</h5>
-			</div>		
-			<PuSkeleton v-if="tablaPedidos" :count="2"/> 
-			<div class="row" >
-				<apexchart
-					v-if="carga"
-					type="donut"
-					width="500px"
-					:options="chartOptions"
-					:series="series"
-				></apexchart>
 			</div>
-			<div class="text-center">
-				<p>
-					Grafico relacionado a los pedidos del ultimo mes.
-				</p>
-			</div>
+			<PuSkeleton v-if="tablaPedidos" :count="2" />
+			<apexchart
+				v-if="carga"
+				type="donut"
+				width="350px"
+				:options="chartOptions"
+				:series="series"
+			/>
 		</div>
 	</div>
 </template>
@@ -31,7 +24,7 @@ export default {
 		//series: [1, 1],
 		chartOptions: {
 			chart: {
-				width: 300,
+				width: 350,
 				type: "donut",
 			},
 			labels: [],
@@ -41,21 +34,24 @@ export default {
 					breakpoint: 480,
 					options: {
 						chart: {
-							width: 200,
+							width: 350,
 						},
 						legend: {
-							position: "top",
+							show: false,
 						},
 					},
 				},
 			],
+			legend: {
+				position: "bottom",
+			},
 		},
-		carga:false,
+		carga: false,
 	}),
-	computed:{
-		tablaPedidos(){
-			return (this.chartOptions.labels.length > 0) ? false : true; 
-		}
+	computed: {
+		tablaPedidos() {
+			return this.chartOptions.labels.length > 0 ? false : true;
+		},
 	},
 	methods: {
 		async loadChart() {
@@ -64,9 +60,9 @@ export default {
 			const cantidad = conjuntoLibros.map((elem) => elem.cantidad);
 			const nombreLibro = conjuntoLibros.map((elem) => elem.nombreLibro);
 
-      this.series = cantidad;
-      this.chartOptions.labels = nombreLibro ;
-			this.carga = true;		
+			this.series = cantidad;
+			this.chartOptions.labels = nombreLibro;
+			this.carga = true;
 		},
 	},
 	created() {
@@ -74,6 +70,4 @@ export default {
 	},
 };
 </script>
-<style scoped>
-
-</style>
+<style scoped></style>
