@@ -43,7 +43,7 @@ Vue.use(ServerTable,{},false, 'bootstrap4','default');
 import "animate.css";
 
 // Agregamos la URL base de nuestra API
-console.log(process.env);
+console.log(process.env.VUE_APP_RUTA_API);
 axios.defaults.baseURL = 'http://localhost:8000';
 //axios.defaults.baseURL = 'https://api.cumbresanramon.cl/';
 
