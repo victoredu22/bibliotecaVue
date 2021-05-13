@@ -122,13 +122,9 @@
 </template>
 <script>
 import { mapActions, mapState } from "vuex";
-import { makeToast } from "../../../helper/makeToast";
-import {formateoFecha} from "../../../helper/fechaSql";
+import { makeToast } from "@/helper/makeToast";
+import {formateoFecha} from "@/helper/fechaSql";
 export default {
-	components: {
-		makeToast,
-		formateoFecha
-	},
 	data() {
 		return {
 			selectedAlumno: "",
@@ -152,9 +148,10 @@ export default {
 	computed: {
 		...mapState("alumnos", ["dataAlumnos"]),
 		...mapState("libros", ["jsonLibros"]),
+
 	},
 	methods: {
-
+		...mapActions("pedidos",["addPedido"]),
 		...mapActions("pages", ["addPedidoData"]),
 		cickCalendario() {
 			this.error.fechaEntrega = false;
@@ -212,6 +209,10 @@ export default {
 				this.infoAlumno.cantidad++;
 				this.infoLibro.cantidad--;
 				
+				console.log(pedido);
+
+				this.addPedido(pedido);
+
 				this.addPedidoData({
 					...pedido,
 					fechaEntrega:formateoFecha(pedido.fechaEntrega),

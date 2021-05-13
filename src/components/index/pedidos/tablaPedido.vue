@@ -48,7 +48,6 @@ import cardPedido from "./cardPedido";
 import buscadorPedido from "./buscadorPedido";
 import modalNuevoPedido from "../modal/nuevoPedido";
 import { formateoFecha } from "../../../helper/fechaSql";
-import moment from "moment";
 
 export default {
 	components: {

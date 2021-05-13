@@ -55,18 +55,12 @@
 				Aceptar
 			</b-button>
 		</template>
-		<toastComponent ref="toastComponent"></toastComponent>
 	</b-modal>
 </template>
 <script>
 import { mapActions, mapState } from "vuex";
-import toastComponent from "@/components/toastComponent";
-import { makeToast } from "../../../helper/makeToast";
+import { makeToast } from "@/helper/makeToast";
 export default {
-	components: {
-		toastComponent,
-		makeToast,
-	},
 	data() {
 		return {
 			pedido: "",

@@ -40,8 +40,8 @@
 </template>
 <script>
 import { mapActions, mapState } from "vuex";
-import { paginationData } from "../../../helper/pagination";
-import { formateoFecha } from "../../../helper/fechaSql";
+import { paginationData } from "@/helper/pagination";
+import { formateoFecha } from "@/helper/fechaSql";
 export default {
 	data: () => ({
 		pageNumber: {},

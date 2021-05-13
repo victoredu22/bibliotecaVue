@@ -67,7 +67,6 @@ export default {
     ...mapActions('libros',['uploadDataLibros']),
 		...mapActions("menu", ["updateMenu"]),
 		...mapActions("menu", ["updateTitulo"]),
-		...mapActions("pedidos",['updatePedidoMes']),
 		async loadData() {
 			const { data } = await this.axios.get("api/pedidosRecientes");
 			const { getPedido: librosPedidos } = data;
@@ -77,13 +76,8 @@ export default {
 				...item,
 				fechaEntrega: this.fechaConversion(item.fechaEntrega)
 			}));
+				
 
-		
-			const { data: dataPedidos } = await this.axios.get(
-				"api/pedidosMes"
-			);
-			const { getPedidos } = dataPedidos;
-			this.updatePedidoMes(getPedidos);
 			this.updatePedido(pedidosJson);
 		},
     async loadAlumnos() {
@@ -110,6 +104,7 @@ export default {
 		},
 	},
   mounted(){
+	
     this.loadData();
     this.loadAlumnos();
     this.loadLibros();

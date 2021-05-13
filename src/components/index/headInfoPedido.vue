@@ -2,9 +2,9 @@
 	<div class="row">
 		<div class="col-md-12">
 			<b-alert show variant="info">
-				<div class="alerta"> 
+				<div class="alerta">
 					<h4 class="alert-heading">
-						{{ pedidoMes.length }} Pedidos este mes.
+						{{ filtroMes.length }} Pedidos este mes.
 					</h4>
 					<p>
 						Totalidad de libros solicitados este mes
@@ -12,7 +12,7 @@
 				</div>
 			</b-alert>
 		</div>
-<!-- 		<div class="col-md-12">
+		<!-- 		<div class="col-md-12">
 			<b-alert show variant="warning">
 				<div class="alerta"> 
 				<h4 class="alert-heading">
@@ -28,9 +28,12 @@
 		</div> -->
 		<div class="col-md-12">
 			<b-alert show variant="success">
-				<div  class="alerta"> 
+				<div class="alerta">
 					<h4 class="alert-heading">
-						{{ jsonLibros.reduce((a, b) => a + b.cantidad, 0) }} Libros en el sistema.
+						{{
+							jsonLibros.reduce((a, b) => a + b.cantidad, 0)
+						}}
+						Libros en el sistema.
 					</h4>
 					<p>
 						Totalidad de libros en el sistema de biblioteca.
@@ -42,16 +45,30 @@
 </template>
 <script>
 import { mapState } from "vuex";
+import { diasMes } from "../../helper/fechaSql";
+
+import moment from "moment";
+
 export default {
-	data: () => ({
-	}),
-	computed:{
+	data: () => ({}),
+	computed: {
 		...mapState("alumnos", ["dataAlumnos"]),
 		...mapState("libros", ["jsonLibros"]),
-		...mapState("pedidos",['pedidoMes']),
-		cargaDatos(){
-			return (this.pedidoMes.length != "") ? false : true; 
-		}
+		...mapState("pedidos", ["jsonPedido"]),
+		filtroMes() {
+			const { primerDiaMes, ultimoDiaMes } = diasMes();
+			return this.jsonPedido.filter(
+				(pedido) =>
+					this.formatFecha(pedido.created_at) > primerDiaMes &&
+					this.formatFecha(pedido.created_at) < ultimoDiaMes
+			);
+		},
+	},
+	methods: {
+		formatFecha(fecha) {
+			var fecha = fecha.split(" ");
+			return fecha[0];
+		},
 	},
 };
 </script>

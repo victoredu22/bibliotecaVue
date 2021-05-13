@@ -72,16 +72,14 @@
 				Cargando...
 			</b-button>
 		</template>
-		<toastComponent ref="toastComponent"></toastComponent>
+
 	</b-modal>
 </template>
 <script>
 import { mapActions, mapState } from "vuex";
-import toastComponent from "@/components/toastComponent";
+
+import {makeToast} from '@/helper/makeToast'
 export default {
-	components: {
-		toastComponent,
-	},
 	data: () => ({
 		nombreTitulo: "",
 		datos: {
@@ -123,12 +121,10 @@ export default {
 
 			if (libro) {
 				this.setLibro(libro);
-				const arrayToast = {
-					msg: "Felicitaciones se ha ingresado con exito.",
+				
+				makeToast({msg: "Felicitaciones se ha ingresado con exito.",
 					title: "Exito",
-					variant: "success",
-				};
-				this.$refs.toastComponent.makeToast(arrayToast);
+					variant: "success",})
 			}
 		},
 		datosLibro() {

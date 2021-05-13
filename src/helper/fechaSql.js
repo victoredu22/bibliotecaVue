@@ -1,8 +1,5 @@
 import moment from 'moment'
-
 require('moment/locale/es')
-
-
 
 const formateoFecha = (date) => {
 	//const fecha = "2021-03-27 23:54:21";
@@ -15,9 +12,13 @@ const formateoFecha = (date) => {
 
   const jj = m.format('LL'); // '1. Juni 2019'
 
-
   return m.format('LL');
-
 };
 
-export { formateoFecha };
+const diasMes = ()=>{
+	const primerDiaMes = moment().startOf('month').format('YYYY-MM-DD');
+	const ultimoDiaMes   = moment().endOf('month').format('YYYY-MM-DD');
+
+	return {primerDiaMes,ultimoDiaMes}
+}
+export { formateoFecha,diasMes };

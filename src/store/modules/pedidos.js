@@ -1,7 +1,6 @@
 export default {
 	namespaced: true,
 	state: {
-		pedidoMes:'',
 		jsonPedido: [],
 		active: "",
 	},
@@ -25,22 +24,12 @@ export default {
 			);
     },
     addPedido(state,payload){
-      state.jsonPedido.push({
-        ...payload.pedido,
-        nombreAlumno: `${payload.infoAlumno.infoAlumno} ${payload.infoAlumno.apellido}`,
-        nombreLibro: `${payload.infoLibro.nombreLibro}`
-      });
+      state.jsonPedido.push(payload);
     },
-		cambioPedidoMes(state,payload){
-			state.pedidoMes = payload;
-		}
 	},
 	actions: {
 		updatePedido({ commit }, payload) {
 			commit("cambioJsonPedido", payload);
-		},
-		updatePedidoMes({commit},payload){
-			commit('cambioPedidoMes',payload);
 		},
 		activePedido({ commit }, payload) {
 			commit("activePedido", payload);
