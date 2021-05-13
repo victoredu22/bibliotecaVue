@@ -2,7 +2,7 @@
 	<div class="d-flex" id="content-wrapper">
       <div id="sidebar-container" class="bg-primary">
         <div class="logo">
-          <h3 class="text-light font-weight-bold">Panel Admin</h3>
+          <h3 class="text-light font-weight-bold">Aministrador Biblioteca</h3>
         </div>
 
         <div class="menu ">

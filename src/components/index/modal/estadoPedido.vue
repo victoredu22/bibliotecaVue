@@ -3,30 +3,29 @@
 		<template v-slot:modal-title>
 			<span>Cambiar el estado del pedido</span>
 		</template>
-		<div class="media">
-			<div dir="ltr" class="ml-2">
-				<div>
-					<i
-						class="fas fa-book"
-						style="font-size: 70px; color:#14b3e2a6;margin-top: 10%;"
-					></i>
-				</div>
-			</div>
 
-			<div class="media-body" style="margin-left:20px">
+		<div class="d-flex">
+			<div class="col-md-12">
 				<h4>{{ pedido.nombreLibro }}</h4>
 				<li class="liNone">
 					Nombre Alumno :
-					<span class="spanGreen">{{ pedido.nombreAlumno }}</span>
+					<span class="spanGreen">
+						{{ pedido.nombre }} {{ pedido.apellido }}
+					</span>
 				</li>
 				<li class="liNone">
-					Fecha Entrega Estimada:					<span class="spanGreen">
+					Fecha Limite Entrega:
+					<span class="spanGreen">
 						{{ pedido.fechaEntrega }}
 					</span>
 				</li>
 				<li class="liNone">
 					Estado Pedido :
-					<select name="select" v-model="selected">
+					<select
+						class="form-select"
+						name="select"
+						v-model="selected"
+					>
 						<option
 							v-for="option in options"
 							v-bind:value="option.value"
@@ -36,8 +35,17 @@
 						</option>
 					</select>
 				</li>
+				<li v-if="selected === 2" class="liNone">
+					<label class="form-label">Estado Libro:</label>
+					<textarea
+						class="form-control"
+						rows="3"
+						v-model="pedido.estadoEntrega"
+					></textarea>
+				</li>
 			</div>
 		</div>
+
 		<template v-slot:modal-footer="{ ok, cancel }">
 			<!-- Emulate built in modal footer ok and cancel button actions -->
 			<b-button @click="cancel()">
@@ -53,10 +61,11 @@
 <script>
 import { mapActions, mapState } from "vuex";
 import toastComponent from "@/components/toastComponent";
-
+import { makeToast } from "../../../helper/makeToast";
 export default {
 	components: {
 		toastComponent,
+		makeToast,
 	},
 	data() {
 		return {
@@ -65,7 +74,6 @@ export default {
 				pendiente: false,
 				entregado: false,
 			},
-
 			selected: "",
 			options: [
 				{ text: "Pendiente", value: 1 },
@@ -74,15 +82,19 @@ export default {
 		};
 	},
 	computed: {
-		...mapState("pedidos", ["jsonPedido"]),
-		...mapState("pedidos", ["active"]),
+		...mapState("pages", ["active"]),
 	},
 	methods: {
-		...mapActions("pedidos", ["updateEstado"]),
-		...mapActions("pedidos",["changeActivePedido"]),
-		...mapActions("pages",["updateEstadoPedido"]),
+		...mapActions("pages", ["changeActivePedido"]),
+		...mapActions("pages", ["updateEstadoPedido"]),
 		sendPedido() {
-			this.pedido = this.active;
+			this.pedido = {
+				...this.active,
+				estadoEntrega:
+					this.active.estadoEntrega === null
+						? "El libro se encuentra en el mismo estado como se entrego."
+						: this.active.estadoEntrega,
+			};
 			const { estado } = this.pedido;
 			this.selected = estado == 1 ? 1 : 2;
 		},
@@ -95,24 +107,26 @@ export default {
 			const form = {
 				idPedido: this.pedido.idPedido,
 				estado: this.selected,
+				estadoEntrega:
+					this.selected === 2 ? this.pedido.estadoEntrega : null,
 			};
+
 			const { data } = await this.axios.post(
 				`api/updateEstadoLibro`,
 				form
 			);
 			const { updatePedido: pedido } = data;
+
 			this.updateEstadoPedido(pedido);
 			this.changeActivePedido(pedido);
-			
-			
-			const arrayToast = {
+			makeToast({
 				msg: `Felicitaciones el estado ha cambiado a ${
 					this.selected == 1 ? "Pendiente" : "Entregado"
 				} `,
 				title: "Exito",
 				variant: "success",
-			};
-			this.$refs.toastComponent.makeToast(arrayToast);
+				solid: true,
+			});
 		},
 		resetModal() {},
 	},

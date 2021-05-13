@@ -1,8 +1,7 @@
 <template>
 	<b-modal id="modal-nuevoPedido" @show="resetModal" @ok="handleEnvio">
 		<template v-slot:modal-title>
-		 <h5 class="modal-title">Creación nuevo pedido</h5>
-
+			<h5 class="modal-title">Creación nuevo pedido</h5>
 		</template>
 
 		<div class="media">
@@ -92,35 +91,49 @@
 						Este {{ error.fechaEntrega[0] }}
 					</span>
 				</b-form-group>
+				<b-form-group label="Ingresa el estado actual del libro">
+					<b-form-textarea
+						id="textarea"
+						v-model="estadoRetiro"
+						placeholder="Enter something..."
+						rows="3"
+						max-rows="6"
+					></b-form-textarea>
+				</b-form-group>
 			</div>
 		</div>
 
 		<template v-slot:modal-footer="{ ok }">
 			<!-- Emulate built in modal footer ok and cancel button actions -->
-			<b-button v-if="!loadCargaPedido" block variant="primary" @click="ok()">
+			<b-button
+				v-if="!loadCargaPedido"
+				block
+				variant="primary"
+				@click="ok()"
+			>
 				Nuevo Pedido
-			</b-button> 
+			</b-button>
 			<b-button v-else block variant="primary">
 				<b-spinner small type="grow"></b-spinner>
 				Cargando...
 			</b-button>
 		</template>
-		<toastComponent ref="toastComponent"></toastComponent>
 	</b-modal>
 </template>
 <script>
 import { mapActions, mapState } from "vuex";
-import toastComponent from "@/components/toastComponent";
+import { makeToast } from "../../../helper/makeToast";
+import {formateoFecha} from "../../../helper/fechaSql";
 export default {
 	components: {
-		toastComponent,
+		makeToast,
+		formateoFecha
 	},
 	data() {
 		return {
-			alumnos: [],
 			selectedAlumno: "",
 			selectedLibro: "",
-
+			estadoRetiro: "El libro se encuentra en perfectas condiciones.",
 			infoAlumno: [],
 			infoLibro: [],
 			fechaEntrega: "",
@@ -133,17 +146,16 @@ export default {
 			msg: "",
 			variant: "",
 			cantidadLibros: "",
-			loadCargaPedido:false
+			loadCargaPedido: false,
 		};
 	},
 	computed: {
-		...mapState("pedidos", ["jsonPedido"]),
 		...mapState("alumnos", ["dataAlumnos"]),
 		...mapState("libros", ["jsonLibros"]),
 	},
 	methods: {
-		...mapActions("pedidos", ["updatePedido"]),
-		...mapActions("pedidos", ["addPedido"]),
+
+		...mapActions("pages", ["addPedidoData"]),
 		cickCalendario() {
 			this.error.fechaEntrega = false;
 		},
@@ -154,57 +166,61 @@ export default {
 		async sendPedido() {
 			const { idLibro } = this.selectedLibro;
 			const { idAlumno } = this.selectedAlumno;
-			const fechaEntrega = this.fechaEntrega;
 
 			const form = {
 				idLibro,
 				idAlumno,
-				fechaEntrega,
+				fechaEntrega: this.fechaEntrega,
+				estadoRetiro: this.estadoRetiro,
 			};
+
 			this.loadCargaPedido = true;
 			const { data } = await this.axios.post(`api/create-pedido`, form);
-			const { errores } = data;
-			const { msg } = data;
-			const { ok } = data;
-			const { pedido } = data;
+			const { errores, msg, ok, pedido,libro, curso } = data;
+
 			this.error = errores ? errores : { ...this.error };
-				this.loadCargaPedido = false;
+			this.loadCargaPedido = false;
 			if (!ok) {
 				if (msg == "libroEncontrado") {
-					const arrayToast = {
+					makeToast({
 						msg: "El alumno ya tiene asignado el libro.",
 						title: "Atención",
 						variant: "warning",
-					};
-					this.$refs.toastComponent.makeToast(arrayToast);
+						solid: true,
+					});
 				}
 				if (msg == "libroSinStock") {
-					const arrayToast = {
-						msg:"Este libro se encuentra sin stock no podemos realizar el pedido.",
+					makeToast({
+						msg:
+							"Este libro se encuentra sin stock no podemos realizar la entrega.",
 						title: "Atención",
 						variant: "danger",
-					};
-					this.$refs.toastComponent.makeToast(arrayToast);
+						solid: true,
+					});
 				}
 			}
 
 			if (ok) {
-				const arrayToast = {
-					msg: "Felicitaciones se ha ingresado con exito.",
+				makeToast({
+					msg: `El n° pedido es el ${pedido.idPedido}`,
 					title: "Exito",
-					variant: "success",
-				};
-				this.variant = "primary";
-				this.msg = `El n° pedido es el ${pedido.idPedido}`;
-				this.$refs.toastComponent.makeToast(arrayToast);
+					variant: "primary",
+					solid: true,
+				});
+
 				//update variables internas
 				this.infoAlumno.cantidad++;
 				this.infoLibro.cantidad--;
-				this.addPedido({
-					infoAlumno: this.infoAlumno,
-					infoLibro: this.infoLibro,
-					pedido,
-				});
+				
+				this.addPedidoData({
+					...pedido,
+					fechaEntrega:formateoFecha(pedido.fechaEntrega),
+					fechaRetiro:formateoFecha(pedido.fechaRetiro),
+					nombre:this.infoAlumno.nombre, 
+					apellido:this.infoAlumno.apellido,
+					nombreLibro:libro.nombreLibro,
+					nombreCurso:curso.nombreCurso
+				});  
 			}
 		},
 		async seleccionAlumno({ idAlumno }) {
@@ -224,7 +240,7 @@ export default {
 			this.error.idLibro = false;
 			const { data } = await this.axios.get(`api/infoLibroId/${idLibro}`);
 			const { libro } = data;
-			
+
 			this.infoLibro = libro;
 		},
 		onContext(ctx) {

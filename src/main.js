@@ -10,6 +10,7 @@ import vSelect from 'vue-select'
 import 'vue-select/dist/vue-select.css';
 import Skeleton from 'vue-loading-skeleton';
 import $ from 'jquery'
+import toastr from 'toastr'
 Vue.component('v-select', vSelect)
 
 import '@fortawesome/fontawesome-free/js/all.js';
@@ -42,8 +43,8 @@ Vue.use(ServerTable,{},false, 'bootstrap4','default');
 import "animate.css";
 
 // Agregamos la URL base de nuestra API
-//axios.defaults.baseURL = 'http://localhost:8000';
-axios.defaults.baseURL = 'https://api.cumbresanramon.cl/';
+axios.defaults.baseURL = 'http://localhost:8000';
+//axios.defaults.baseURL = 'https://api.cumbresanramon.cl/';
 
 
 /* 

@@ -48,7 +48,7 @@ import cardPedido from "./cardPedido";
 import buscadorPedido from "./buscadorPedido";
 import modalNuevoPedido from "../modal/nuevoPedido";
 import { formateoFecha } from "../../../helper/fechaSql";
-import moment from 'moment';
+import moment from "moment";
 
 export default {
 	components: {
@@ -72,14 +72,11 @@ export default {
 				`api/pedidosAll?page=${page}`
 			);
 			const pedidos = data.getPedidos.data;
-  		const formatPedidos = pedidos.map((pedido) => ({
-				 ...pedido,
+			const formatPedidos = pedidos.map((pedido) => ({
+				...pedido,
 				fechaEntrega: formateoFecha(pedido.fechaEntrega),
-				fechaRetiro:formateoFecha(pedido.fechaRetiro),
+				fechaRetiro: formateoFecha(pedido.fechaRetiro),
 			}));
-
-
-
 
 			this.loadData(formatPedidos);
 			this.changePedido(true);

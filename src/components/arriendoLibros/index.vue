@@ -98,6 +98,7 @@ export default {
 		...mapState("libros", ["jsonLibros"]),
 	},
 	methods: {
+		...mapActions('alumnos',['uploadAlumnos']),
 		...mapActions("libros", ["updateLibro"]),
 		...mapActions("libros", ["activeLibro"]),
 		...mapActions("menu", ["updateMenu"]),
@@ -105,6 +106,12 @@ export default {
 		arriendoModal(idLibro) {
 			this.activeLibro(idLibro);
 			this.$refs.componente.envioDatos();
+		},
+		async loadAlumnos() {
+			const {data} = await this.axios.get('api/alumnos');
+			const {alumnos} = data;
+
+			this.uploadAlumnos(alumnos);
 		},
 		editarModal(idLibro) {
 
@@ -134,6 +141,7 @@ export default {
 
 		this.updateTitulo(titulo);
 		this.updateMenu(menu);
+		this.loadAlumnos()
 	},
 };
 </script>

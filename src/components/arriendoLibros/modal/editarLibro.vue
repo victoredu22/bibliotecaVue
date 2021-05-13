@@ -7,7 +7,7 @@
 			<b-form-group label="Nombre Libro *">
 				<b-form-input
 					v-model="datos.nombreLibro"
-					placeholder="Ingresa el titulo del material"
+					placeholder="Ingresa el nombre del libro"
 					type="text"
 					disabled="disabled"
 					class="dissabled"
@@ -23,7 +23,7 @@
 					:class="{ 'is-invalid': error.cantidad }"
 					v-on:keyup="camposValidacion()"
 					v-model="datos.cantidad"
-					placeholder="Ingresa el titulo del material"
+					placeholder="Ingresa la cantidad de libros "
 					type="text"
 				>
 				</b-form-input>
@@ -37,7 +37,7 @@
 					:class="{ 'is-invalid': error.autor }"
 					v-on:keyup="camposValidacion()"
 					v-model="datos.autor"
-					placeholder="Ingresa el titulo del material"
+					placeholder="Ingresa el nombre del autor"
 					type="text"
 				>
 				</b-form-input>

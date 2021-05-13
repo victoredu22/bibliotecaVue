@@ -1,14 +1,14 @@
 <template>
 	<b-modal id="modal-nuevoLibro" @show="resetModal" @ok="handleEnvio">
 		<template v-slot:modal-title>
-			<span>Nuevo Libro</span>
+			<span>Crear nuevo libro.</span>
 		</template>
 		<b-form-group>
 			<b-form-group label="Nombre Libro *">
 				<b-form-input
 					v-model="datos.nombreLibro"
 					v-on:keyup="camposValidacion(datos)"
-					placeholder="Ingresa el titulo del material"
+					placeholder="Ingresa el titulo del libro"
 					type="text"
 					:class="{ 'is-invalid': error.nombreLibro }"
 				>

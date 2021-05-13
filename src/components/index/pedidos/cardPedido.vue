@@ -1,11 +1,11 @@
 <template>
 	<div class="row">
-
 		<div v-if="dataPage.length === 0" class="col-md-12">
 			<div class="col-12 ms-3 rounded bg-light text-center p-5">
 				<p><i class="fas fa-ban"></i> No se encontraron resultados.</p>
 			</div>
 		</div>
+		
 		<div
 			class="col-12 mb-2"
 			:class="{ 'animate__animated animate__fadeInDown': loadPedido }"
@@ -53,7 +53,7 @@
 						><br />
 						<p class="fechaEntrega">{{ pedido.fechaRetiro }}</p>
 						<label class="text-muted textResena"
-							>El libro se encuentra con problemas en la tapa.
+							>{{pedido.estadoRetiro === null ? '-' : pedido.estadoRetiro}}
 						</label>
 					</div>
 					<div class="col-4 text-center">
@@ -66,7 +66,7 @@
 						</label
 						><br />
 						<label class="text-muted textResena"
-							>El libro aún no se entrega.
+							>{{pedido.estadoEntrega === null ? '-' : pedido.estadoEntrega}}
 						</label>
 					</div>
 				</div>
@@ -91,8 +91,9 @@ export default {
 		...mapState("pages", ["loadPedido"]),
 	},
 	methods: {
-		...mapActions("pedidos", ["activePedido"]),
+		...mapActions("pages", ["activePedido"]),
 		enviarDatosPedido(idPedido) {
+
 			this.activePedido(idPedido);
 			this.$refs.modalEstadoPedido.sendPedido();
 		},

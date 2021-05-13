@@ -1,6 +1,7 @@
 <template>
 	<div>
 		<nav aria-label="Page navigation example">
+	
 			<ul class="pagination justify-content-center">
 				<li v-if="pagination.current_page > 1">
 					<a
@@ -49,6 +50,7 @@ export default {
 		...mapState("pages", ["pagination"]),
 		...mapState("pages", ["offset"]),
 		...mapState("pages", ["dataPage"]),
+		...mapState("pages", ["loadPedido"]),
 		numPaginas() {
 			return paginationData(this.offset, this.pagination);
 		},
