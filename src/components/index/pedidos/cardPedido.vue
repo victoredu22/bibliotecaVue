@@ -18,7 +18,7 @@
 				class="col-12 ms-3 rounded cardPedido"
 			>
 				<div class="row">
-					<div class="col-8">
+					<div class="col-8 nombreLibro">
 						<label class="lblPedido">{{
 							pedido.nombreLibro
 						}}</label>
@@ -36,7 +36,7 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-4 infoPedido">
+					<div class="col-md-4 col-xs-12 infoPedido">
 						<span class="text-muted">Alumno </span><br />
 						<label class="lblPedido">
 							{{ pedido.nombre }} {{ pedido.apellido }} -
@@ -45,7 +45,7 @@
 							{{ pedido.nombreCurso }}
 						</span>
 					</div>
-					<div class="col-4 text-center detallePedido">
+					<div class="col-md-4 col-xs-12  fechasPedido detallePedido">
 						<span class="text-muted">
 							<i class="far fa-calendar-alt"></i> 
 							Fecha
@@ -56,7 +56,7 @@
 							>{{pedido.estadoRetiro === null ? '-' : pedido.estadoRetiro}}
 						</label>
 					</div>
-					<div class="col-4 text-center">
+					<div class="col-md-4  col-xs-12 fechasPedido">
 						<span class="text-muted"
 							><i class="far fa-calendar-alt"></i> Fecha Limite
 							Entrega</span
@@ -115,6 +115,7 @@ export default {
 .infoPedido {
 	border-right: 1px solid black;
 	border-color: #efefef;
+
 }
 .detallePedido {
 	border-right: 1px solid black;
@@ -125,5 +126,21 @@ export default {
 }
 .textResena {
 	font-size: 13px;
+}
+.fechasPedido{
+	text-align: center;
+}
+
+@media (max-width: 768px) {
+	.infoPedido{
+		margin-left: 2%
+	}
+	.fechasPedido{
+			margin-left: 2%;
+		text-align: left !important;
+	}
+	.nombreLibro{
+	padding-left: 7%;
+}
 }
 </style>

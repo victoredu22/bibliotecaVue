@@ -8,15 +8,15 @@
 					</h5>
 
 					<div class="row mb-2">
-						<div class="col-10">
+						<div class="col-md-10 col-xs-10">
 							<label class="text-muted"
 								>A continuacion verás el listado de libros
 								arrendados segun su fecha correspondiente.
 							</label>
 						</div>
-						<div class="col-2">
+						<div class="col-md-2 col-xs-2">
 							<b-button
-								class="float-right"
+								class="btnPedido"
 								variant="outline-info"
 								v-b-modal.modal-nuevoPedido
 							>
@@ -89,3 +89,13 @@ export default {
 	},
 };
 </script>
+<style>
+.btnPedido{
+	float: float-right ;
+}
+@media (max-width: 768px) {
+	.btnPedido{
+		width:100% !important;
+	}
+}
+</style>
