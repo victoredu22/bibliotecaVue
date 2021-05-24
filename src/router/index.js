@@ -58,10 +58,10 @@ const router = new VueRouter({
 			beforeEnter: guard
 		},
 		{
-			path: "/nuevo-pedido",
-			name: "nuevo-pedido",
-			meta: { layout: BaseLayout },
-			component: () => import("../views/pedidoLibros.vue"),
+			path: "/buscar-pedido",
+			name: "buscar-pedido",
+			meta: { layout: BaseLayout2 },
+			component: () => import("../views/buscadorPedido.vue"),
 			beforeEnter: guard
 		},
 	],

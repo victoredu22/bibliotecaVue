@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const  fetchToken = (endpoint, data, method = "GET")=>{
-  const url = `api/${endpoint}`;
+  const url = `${endpoint}`;
 
   if(method === 'GET'){
     return axios(url);
@@ -12,6 +12,5 @@ const  fetchToken = (endpoint, data, method = "GET")=>{
     });
   } 
 }
-
 
 export {fetchToken}

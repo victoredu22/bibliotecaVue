@@ -78,7 +78,7 @@
 </template>
 <script>
 import { mapState, mapActions } from "vuex";
-import modalEstadoPedido from "../modal/estadoPedido";
+import modalEstadoPedido from "../index/modal/estadoPedido";
 export default {
 	components: {
 		modalEstadoPedido,

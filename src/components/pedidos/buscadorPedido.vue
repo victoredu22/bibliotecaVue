@@ -16,37 +16,43 @@
 	</div>
 </template>
 <script>
-
 import { mapActions, mapState } from "vuex";
 import { paginationData } from "@/helper/pagination";
-import { formateoFecha } from "@/helper/fechaSql";
+import { pedidosItems, formatFechaPedido } from "@/helper/listadoItems";
+
 export default {
 	data: () => ({
-    buscador:''
-  }),
+		buscador: "",
+	}),
 	computed: {
-  
-  },
+		...mapState("cursos", ["activeCurso"]),
+		...mapState("alumnos", ["activeAlumno"]),
+	},
 	methods: {
-    ...mapActions("pages", ["loadItems"]),
-    ...mapActions("pages", ["loadData"]),
+		...mapActions("pages", ["loadItems"]),
+		...mapActions("pages", ["loadData"]),
+		...mapActions("pedidos", ["loadBuscador"]),
+
 		async searchProducto() {
+			this.loadBuscador(this.buscador);
 
-			const { data } = await this.axios.get(
-				`api/searchPedido?buscador=${this.buscador}`
-			);
+			const idCursos = this.activeCurso.map((curso) => curso.idCurso);
 
-			const pedidos = data.resultadoBusqueda.data;
-			const formatPedidos = pedidos.map((pedido) => ({
-				 ...pedido,
-				fechaEntrega: formateoFecha(pedido.fechaEntrega),
-				fechaRetiro:formateoFecha(pedido.fechaRetiro),
-			}));
+			const { data } = await pedidosItems({
+				activeAlumno:this.activeAlumno,
+				activeCurso: this.activeCurso.length,
+				buscador: this.buscador,
+				idCursos,
+				page:1
+			});
+			console.log(data);
+			
 
-			this.loadData(formatPedidos);
+			const pedidos = formatFechaPedido(data.getPedidos.data);
+
+			this.loadData(pedidos);
 			this.loadItems(data.pagination);
 			const paginacion = paginationData(this.offset, data.pagination);
-
 		},
 	},
 };

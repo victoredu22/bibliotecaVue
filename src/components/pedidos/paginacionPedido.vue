@@ -1,7 +1,6 @@
 <template>
 	<div>
 		<nav aria-label="Page navigation example">
-	
 			<ul class="pagination justify-content-center">
 				<li v-if="pagination.current_page > 1">
 					<a
@@ -32,16 +31,17 @@
 						>Siguiente</a
 					>
 				</li>
-			
 			</ul>
-			<p class="text-center">{{dataPage.length}} Items encontrados</p>
+			<p class="text-center">{{ dataPage.length }} Items encontrados</p>
 		</nav>
 	</div>
 </template>
 <script>
 import { mapActions, mapState } from "vuex";
 import { paginationData } from "@/helper/pagination";
-import { formateoFecha } from "@/helper/fechaSql";
+
+import { pedidosItems, formatFechaPedido } from "@/helper/listadoItems";
+
 export default {
 	data: () => ({
 		pageNumber: {},
@@ -51,6 +51,9 @@ export default {
 		...mapState("pages", ["offset"]),
 		...mapState("pages", ["dataPage"]),
 		...mapState("pages", ["loadPedido"]),
+		...mapState("cursos", ["activeCurso"]),
+		...mapState('alumnos',['activeAlumno']),
+		...mapState('pedidos',['buscador']),
 		numPaginas() {
 			return paginationData(this.offset, this.pagination);
 		},
@@ -61,21 +64,34 @@ export default {
 		...mapActions("pages", ["loadData"]),
 		...mapActions("pages", ["changePedido"]),
 		async getTable(page) {
-			this.changePedido(false);
-			const { data } = await this.axios.get(
-				`api/pedidosAll?page=${page}`
-			);
-			const pedidos = data.getPedidos.data;
-  		const formatPedidos = pedidos.map((pedido) => ({
-				 ...pedido,
-				fechaEntrega: formateoFecha(pedido.fechaEntrega),
-				fechaRetiro:formateoFecha(pedido.fechaRetiro),
-			}));
+		
 
-			this.loadData(formatPedidos);
+			this.changePedido(false);
+			const idCursos = this.activeCurso.map((curso) => curso.idCurso);
+			
+			console.log('holaaa'+this.buscador);
+
+			
+			const { data: dataPedido } = await pedidosItems({
+				activeAlumno: this.activeAlumno,
+				activeCurso: this.activeCurso.length,
+				buscador: this.buscador,
+				idCursos,
+				page,
+			});
+
+			
+			
+
+			const pedidos = formatFechaPedido(dataPedido.getPedidos.data);
+
+			this.loadData(pedidos);
 			this.changePedido(true);
-			this.loadItems(data.pagination);
-			this.pageNumber = paginationData(this.offset, data.pagination);
+			this.loadItems(dataPedido.pagination);
+			this.pageNumber = paginationData(
+				this.offset,
+				dataPedido.pagination
+			);
 		},
 
 		changePage(page) {

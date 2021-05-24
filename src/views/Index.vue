@@ -43,7 +43,7 @@
 <script>
 import { mapActions, mapState } from "vuex";
 import tablaPedidoAnual from "../components/index/tablaPedidosAnual";
-import pedidoAnual from '../components/index/pedidos/tablaPedido'
+import pedidoAnual from '../components/index/tablaPedido'
 import moment from "moment";
 import chartPedidos from "../components/index/chartPedidos";
 import tablasStock from '../components/index/tablaStock';

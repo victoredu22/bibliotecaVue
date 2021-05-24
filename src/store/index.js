@@ -5,6 +5,7 @@ import menu from "./modules/menu";
 import pedidos from "./modules/pedidos";
 import alumnos from "./modules/alumnos";
 import pages from "./modules/pages";
+import cursos from './modules/cursos';
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -45,6 +46,7 @@ export default new Vuex.Store({
 		menu,
 		pedidos,
 		alumnos,
-		pages
+		pages,
+		cursos
 	},
 });

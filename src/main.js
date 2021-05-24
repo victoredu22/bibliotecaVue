@@ -11,6 +11,31 @@ import 'vue-select/dist/vue-select.css';
 import Skeleton from 'vue-loading-skeleton';
 import $ from 'jquery'
 import toastr from 'toastr'
+
+
+import VCalendar from 'v-calendar';
+
+
+Vue.use(VCalendar, {
+  componentPrefix: 'vc',
+});
+
+
+
+
+
+import Calendar from 'v-calendar/lib/components/calendar.umd'
+import DatePicker from 'v-calendar/lib/components/date-picker.umd'
+
+Vue.component('calendar', Calendar)
+Vue.component('date-picker', DatePicker)
+
+
+
+
+
+
+
 Vue.component('v-select', vSelect)
 
 import '@fortawesome/fontawesome-free/js/all.js';

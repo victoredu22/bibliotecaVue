@@ -47,7 +47,7 @@
 import { mapState } from "vuex";
 import { diasMes } from "../../helper/fechaSql";
 
-import moment from "moment";
+
 
 export default {
 	data: () => ({}),

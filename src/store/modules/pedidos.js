@@ -3,6 +3,7 @@ export default {
 	state: {
 		jsonPedido: [],
 		active: "",
+		buscador:undefined
 	},
 	mutations: {
 		cambioJsonPedido(state, payload) {
@@ -26,6 +27,9 @@ export default {
     addPedido(state,payload){
       state.jsonPedido.push(payload);
     },
+		loadBuscador(state,payload){
+			state.buscador = payload;
+		}
 	},
 	actions: {
 		updatePedido({ commit }, payload) {
@@ -42,7 +46,10 @@ export default {
     },
     addPedido({commit},payload){
       commit("addPedido",payload)
-    }
+    },
+		loadBuscador({commit},payload){
+			commit("loadBuscador",payload)
+		}
 	},
 	getters: {},
 };
