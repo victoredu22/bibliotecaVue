@@ -7,6 +7,8 @@
 </template>
 <script>
 import DatePicker from 'v-calendar/lib/components/date-picker.umd'
+import moment from "moment";
+import {diaActual} from '../../helper/fechaSql';
 
 
 export default {
@@ -18,7 +20,10 @@ export default {
   }),
   methods:{
      onDayClick(day) {
-       console.log(day);
+       const {id} = day;
+       console.log( diaActual());
+
+       
        
      }
   }

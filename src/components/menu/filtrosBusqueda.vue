@@ -1,6 +1,5 @@
 <template>
 	<div>
-			{{listadoMenu}}
 		<b-card
 			v-for="(menu, index) in listadoMenu"
 			:key="index"

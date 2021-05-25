@@ -34,8 +34,10 @@ export default {
 		...mapActions("pedidos", ["loadBuscador"]),
 
 		async searchProducto() {
-			this.loadBuscador(this.buscador);
 
+			this.loadBuscador(this.buscador);
+			
+			
 			const idCursos = this.activeCurso.map((curso) => curso.idCurso);
 
 			const { data } = await pedidosItems({
