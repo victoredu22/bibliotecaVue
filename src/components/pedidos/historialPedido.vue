@@ -45,7 +45,7 @@ import { mapActions, mapState } from "vuex";
 import paginationPedido from "@/components/pedidos/paginacionPedido";
 import cardPedido from "@/components/pedidos/cardPedido";
 import buscadorPedido from "@/components/pedidos/buscadorPedido";
-import modalNuevoPedido from "@/components/index/modal/nuevoPedido";
+import modalNuevoPedido from "@/components/pedidos/modal/nuevoPedido";
 import { pedidosItems, formatFechaPedido } from "@/helper/listadoItems";
 export default {
 	components: {
@@ -57,7 +57,11 @@ export default {
 	data: () => ({
 		puSkeleton: true,
 	}),
-	computed: {},
+	computed: {
+		...mapState("cursos",["activeCurso"]),
+		...mapState("alumnos",["activeAlumno"]),
+		...mapState("pedidos",["buscador"]),
+	},
 	methods: {
 		...mapActions("pages", ["loadItems"]),
 		...mapActions("pages", ["changePagination"]),
@@ -67,6 +71,9 @@ export default {
 			this.changePedido(false);
 
 			const { data } = await pedidosItems({
+				activeAlumno:this.activeAlumno,
+        buscador:this.buscador,
+        idCursos:this.activeCurso,
 				page: 1,
 			});
 			const pedidos = formatFechaPedido(data.getPedidos.data);

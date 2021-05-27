@@ -45,8 +45,7 @@ export default {
 				idCursos,
 				page:1
 			});
-			console.log(data);
-			
+
 
 			const pedidos = formatFechaPedido(data.getPedidos.data);
 

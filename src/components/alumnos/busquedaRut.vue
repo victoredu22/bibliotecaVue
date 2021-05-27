@@ -49,10 +49,11 @@ export default {
     async seleccionAlumno(){
 
       this.setActiveAlumno(this.selectedAlumno);
-  
+
       const {data} = await pedidosItems({
 				activeAlumno:this.activeAlumno,
         buscador:this.buscador,
+        idCursos:this.activeCurso,
 				page: 1,
 			});
 

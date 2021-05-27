@@ -27,7 +27,6 @@ export default {
 		...mapState("cursos", ["dataCursos"]),
 		...mapState("cursos", ["activeCurso"]),
 		...mapState("pedidos",["buscador"]),
-
 	},
 	methods: {
 		...mapActions("cursos", ["uploadCurso"]),

@@ -20,5 +20,14 @@ const diasMes = ()=>{
 	const ultimoDiaMes   = moment().endOf('month').format('YYYY-MM-DD');
 
 	return {primerDiaMes,ultimoDiaMes}
-}
-export { formateoFecha,diasMes };
+};
+
+const fechaConversion = (fechaCurso)=>{
+	var objDate = new Date(fechaCurso);
+	let dia = objDate.toLocaleDateString("es-ES", { day: "numeric" }),
+		mes = objDate.toLocaleDateString("es-ES", { month: "long" }),
+		año = objDate.toLocaleDateString("es-ES", { year: "numeric" });
+
+	return dia + " " + mes + " " + año;
+};
+export { formateoFecha, diasMes, fechaConversion };

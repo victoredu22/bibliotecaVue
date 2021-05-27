@@ -56,6 +56,9 @@ export default {
 	}),
 	computed:{
 		...mapState("pages", ["dataPage"]),
+		...mapState("alumnos",["activeAlumno"]),
+		...mapState("cursos",["activeCurso"]),
+		...mapState("pedidos",["buscador"]),
 	},
 	methods: {
 		...mapActions("menu", ["updateMenu"]),
@@ -67,13 +70,16 @@ export default {
 		},
 		async loadCardItems() {
 			const {data} = await pedidosItems({
-				page: 1
+				page: 1,
+				activeAlumno:this.activeAlumno,
+				idCursos:this.activeCurso,
+				buscador:this.buscador,
 			});
 
 			const pedidos = formatFechaPedido(data.getPedidos.data);
 			
-			this.loadData(pedidos);
-			this.loadItems(data.pagination); 
+		 	this.loadData(pedidos);
+			this.loadItems(data.pagination);
 		},
 	},
 	mounted() {
