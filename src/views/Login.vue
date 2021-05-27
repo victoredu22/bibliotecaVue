@@ -12,9 +12,7 @@
 								class="slide-img-bg"
 								:style="{
 									'background-image':
-										'url(' +
-										require('@/assets/biblioteca.jpg') +
-										')',
+										'url(' + require('@/assets/biblioteca.jpg') + ')',
 								}"
 							></div>
 						</div>
@@ -22,6 +20,7 @@
 				</div>
 			</div>
 		</div>
+		
 
 		<div
 			class="h-100 d-md-flex d-sm-block bg-white justify-content-center align-items-center col-md-5 col-lg-4"
@@ -33,10 +32,7 @@
 					autocomplete="off"
 					class="form-horizontal"
 				>
-					<h2
-						align="center"
-						style="font-family: sans-serif;margin-top:10%"
-					>
+					<h2 align="center" style="font-family: sans-serif;margin-top:10%">
 						Administrador Biblioteca
 					</h2>
 					<div class="form-group ">
@@ -70,9 +66,7 @@
 							v-model="password"
 						/>
 					</div>
-					<div
-						class="form-group d-flex flex-row justify-content-center"
-					>
+					<div class="form-group d-flex flex-row justify-content-center">
 						<button
 							v-if="rutInValido"
 							class="btn btn-primary"
@@ -142,13 +136,11 @@ export default {
 			if (success === false) {
 				this.makeToast("danger", data.message);
 			} else {
-				var token =
-					"Bearer " + data.token.original.access_token;
+				var token = "Bearer " + data.token.original.access_token;
 				var user = data.token.original.user;
 				this.setAccessToken(token);
 				router.push({ name: "index" });
 			}
-
 		},
 		gteImagen() {
 			this.axios.get("api/imagenLogin").then((res) => {

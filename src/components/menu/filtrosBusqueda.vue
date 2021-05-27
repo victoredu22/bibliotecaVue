@@ -1,33 +1,33 @@
 <template>
-  <div>
-    <b-card
-      v-for="(menu, index) in listadoMenu"
-      :key="index"
-      no-body
-      class="mb-1"
-    >
-      <hr />
-      <b-card-header>
-        <a
-          block
-          v-b-toggle
-          :href="'#' + menu.toggle"
-          @click.prevent
-          @click="cambioEstado(index, menu.estado)"
-        >
-          <h5>
-            <i class="fas fa-angle-right"></i>
-            {{ menu.titulo }}
-          </h5>
-        </a>
-      </b-card-header>
-      <b-collapse :id="menu.toggle" :visible="menu.estado">
-        <div v-if="menu.id == 0">
-          <busquedaRut style="margin-left: 6%" />
-        </div>
-        <div v-if="menu.id == 1">
-          <checkCursos style="margin-left: 6%" />
-        </div>
+	<div>
+		<b-card
+			v-for="(menu, index) in listadoMenu"
+			:key="index"
+			no-body
+			class="mb-1"
+		>
+    <hr>
+			<b-card-header >
+				<a block v-b-toggle :href="'#' + menu.toggle" @click.prevent @click="cambioEstado(index,menu.estado)">
+					<h5>
+						<i
+							class="fas fa-angle-right"
+						></i>
+						{{ menu.titulo }}
+					</h5>
+				</a>
+			</b-card-header>
+			<b-collapse
+				:id="menu.toggle"
+				:visible="menu.estado"
+			>
+		
+      <div v-if="menu.id == 0">
+				<busquedaRut style="margin-left:6%"/>
+      </div>
+      <div v-if="menu.id == 1">
+				<checkCursos style="margin-left:6%"/>
+      </div>
 
         <div v-if="menu.id == 2">
           <datePickerCurso style="margin-left: 6%" />

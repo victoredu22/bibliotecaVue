@@ -18,6 +18,7 @@
 	</div>
 </template>
 <script>
+import {fetchToken} from '../../helper/axios'
 export default {
 	data: () => ({
 		series: [],
