@@ -1,12 +1,57 @@
 <template>
-  <index />
+  <div class="container-fluid">
+		<div class="row">
+			<div class="col-md-9 mb-4">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="header-title mb-4">
+							<i class="fas fa-users"></i> Listado Libros
+						</h5>
+						<p class="card-title-desc">
+							A continuacion podras ver el listado completo en el
+							libro.
+						</p>
+            <tablaLibros/>
+
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="header-title mb-4">
+							<i class="fas fa-book-medical"></i> Agregar un nuevo
+							libro
+						</h5>
+						<p class="card-title-desc">
+							Haz click para agregar libros para poder agregar uno
+							nuevo.
+						</p>
+							<b-button
+							v-b-modal.modal-nuevoLibro
+							class="w-100"
+							variant="outline-info"
+						>
+							<i class="far fa-plus-square"></i>
+							Agregar libro
+						</b-button>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<modalNuevoLibro/>
+	</div>
 </template>
 <script>
 import { mapActions, mapState } from "vuex";
-import index from "@/components/arriendoLibros/index";
+import modalNuevoLibro from '../components/libros/modal/nuevoLibro';
+import {fetchToken} from '@/helper/axios';
+import tablaLibros from '../components/libros/tablaLibros'
 export default {
   components: {
-    index,
+    tablaLibros,
+		modalNuevoLibro
   },
   data() {
     return {};
@@ -14,10 +59,8 @@ export default {
   methods: {
     ...mapActions("libros", ["updateLibro"]),
     async cargaTabla() {
-      const { data } = await this.axios.get("api/libros");
-      const { libros } = data;
-
-      this.updateLibro(libros);
+      const { data } = await fetchToken('libros');
+      this.updateLibro(data.libros);
 
       /* this.axios.get("api/libros").then((res) => {
 				this.updateLibro(res.data.libros);

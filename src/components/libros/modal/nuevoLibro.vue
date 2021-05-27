@@ -93,6 +93,8 @@
 <script>
 import { mapActions, mapState } from "vuex";
 import {makeToast} from '@/helper/makeToast';
+import { fetchToken } from '@/helper/axios';
+
 export default {
 	data: () => ({
 		libro: null,
@@ -168,12 +170,10 @@ export default {
 				destino: this.datos.destino,
 			};
 
-			const { data } = await this.axios.post(
-				"/api/create-libro",
-				formulario
-			);
-			const { libro } = data;
-			const { errores } = data;
+			const { data } = await fetchToken('create-libro',formulario,'POST');
+
+			const { libro,cantidad, errores } = data;
+
 			this.loadCargaPedido = false;
 
 			if (errores) {
@@ -182,7 +182,7 @@ export default {
 
 			if (libro) {
 				//llamo funcion vuex
-				this.addNewLibro(libro);
+				this.addNewLibro({...libro,cantidad});
 
 				makeToast({	msg: "Felicitaciones se ha ingresado el libro con exito.",
 					title: "Exito",

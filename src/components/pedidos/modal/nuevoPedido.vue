@@ -38,12 +38,11 @@
 					>
 						<p>
 							Este alumno cuenta con
-							<strong>{{ cantidadLibros }}</strong> pedidos
-							pendientes.
+							<strong>{{ cantidadLibros }}</strong> pedidos pendientes.
 						</p>
 						<p>
-							#{{ infoAlumno.idAlumno }} -
-							{{ infoAlumno.nombre }} {{ infoAlumno.apellido }}
+							#{{ infoAlumno.idAlumno }} - {{ infoAlumno.nombre }}
+							{{ infoAlumno.apellido }}
 							{{ infoAlumno.numeroDocumento }}
 						</p>
 					</div>
@@ -105,12 +104,7 @@
 
 		<template v-slot:modal-footer="{ ok }">
 			<!-- Emulate built in modal footer ok and cancel button actions -->
-			<b-button
-				v-if="!loadCargaPedido"
-				block
-				variant="primary"
-				@click="ok()"
-			>
+			<b-button v-if="!loadCargaPedido" block variant="primary" @click="ok()">
 				Nuevo Pedido
 			</b-button>
 			<b-button v-else block variant="primary">
@@ -123,7 +117,8 @@
 <script>
 import { mapActions, mapState } from "vuex";
 import { makeToast } from "@/helper/makeToast";
-import {formateoFecha} from "@/helper/fechaSql";
+import { formateoFecha } from "@/helper/fechaSql";
+import { fetchToken } from "@/helper/axios";
 export default {
 	data() {
 		return {
@@ -148,10 +143,9 @@ export default {
 	computed: {
 		...mapState("alumnos", ["dataAlumnos"]),
 		...mapState("libros", ["jsonLibros"]),
-
 	},
 	methods: {
-		...mapActions("pedidos",["addPedido"]),
+		...mapActions("pedidos", ["addPedido"]),
 		...mapActions("pages", ["addPedidoData"]),
 		cickCalendario() {
 			this.error.fechaEntrega = false;
@@ -172,8 +166,8 @@ export default {
 			};
 
 			this.loadCargaPedido = true;
-			const { data } = await this.axios.post(`api/create-pedido`, form);
-			const { errores, msg, ok, pedido,libro, curso } = data;
+			const { data } = await fetchToken("create-pedido", form, "POST");
+			const { errores, msg, ok, pedido, libro, curso } = data;
 
 			this.error = errores ? errores : { ...this.error };
 			this.loadCargaPedido = false;
@@ -208,20 +202,17 @@ export default {
 				//update variables internas
 				this.infoAlumno.cantidad++;
 				this.infoLibro.cantidad--;
-				
-				console.log(pedido);
 
 				this.addPedido(pedido);
-
 				this.addPedidoData({
 					...pedido,
-					fechaEntrega:formateoFecha(pedido.fechaEntrega),
-					fechaRetiro:formateoFecha(pedido.fechaRetiro),
-					nombre:this.infoAlumno.nombre, 
-					apellido:this.infoAlumno.apellido,
-					nombreLibro:libro.nombreLibro,
-					nombreCurso:curso.nombreCurso
-				});  
+					fechaEntrega: formateoFecha(pedido.fechaEntrega),
+					fechaRetiro: formateoFecha(pedido.fechaRetiro),
+					nombre: this.infoAlumno.nombre,
+					apellido: this.infoAlumno.apellido,
+					nombreLibro: libro.nombreLibro,
+					nombreCurso: curso.nombreCurso,
+				});
 			}
 		},
 		async seleccionAlumno({ idAlumno }) {
@@ -231,18 +222,14 @@ export default {
 			this.infoAlumno = this.dataAlumnos.find(
 				(elem) => elem.idAlumno === idAlumno
 			);
-			const { data } = await this.axios.get(
-				`api/infoPedidoAlumno/${idAlumno}`
-			);
-			const { totalPedido } = data;
-			this.cantidadLibros = totalPedido;
+			const { data } = await fetchToken(`infoPedidoAlumno/${idAlumno}`);
+			this.cantidadLibros = data.totalPedido;
 		},
+
 		async seleccionLibro(idLibro) {
 			this.error.idLibro = false;
-			const { data } = await this.axios.get(`api/infoLibroId/${idLibro}`);
-			const { libro } = data;
-
-			this.infoLibro = libro;
+			const { data } = await fetchToken(`infoLibroId/${idLibro}`);
+			this.infoLibro = data.libro;
 		},
 		onContext(ctx) {
 			this.context = ctx;
@@ -261,7 +248,6 @@ export default {
 			};
 		},
 	},
-	created() {},
 };
 </script>
 <style scoped>

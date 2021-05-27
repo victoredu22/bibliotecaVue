@@ -21,11 +21,7 @@
 				</li>
 				<li class="liNone">
 					Estado Pedido :
-					<select
-						class="form-select"
-						name="select"
-						v-model="selected"
-					>
+					<select class="form-select" name="select" v-model="selected">
 						<option
 							v-for="option in options"
 							v-bind:value="option.value"
@@ -60,6 +56,8 @@
 <script>
 import { mapActions, mapState } from "vuex";
 import { makeToast } from "@/helper/makeToast";
+import { fetchToken } from "@/helper/axios";
+
 export default {
 	data() {
 		return {
@@ -101,18 +99,12 @@ export default {
 			const form = {
 				idPedido: this.pedido.idPedido,
 				estado: this.selected,
-				estadoEntrega:
-					this.selected === 2 ? this.pedido.estadoEntrega : null,
+				estadoEntrega: this.selected === 2 ? this.pedido.estadoEntrega : null,
 			};
 
-			const { data } = await this.axios.post(
-				`api/updateEstadoLibro`,
-				form
-			);
-			const { updatePedido: pedido } = data;
-
-			this.updateEstadoPedido(pedido);
-			this.changeActivePedido(pedido);
+			const { data } = await fetchToken(`updateEstadoLibro`,form,"POST");
+			this.updateEstadoPedido(data.updatePedido);
+			this.changeActivePedido(data.updatePedido);
 			makeToast({
 				msg: `Felicitaciones el estado ha cambiado a ${
 					this.selected == 1 ? "Pendiente" : "Entregado"

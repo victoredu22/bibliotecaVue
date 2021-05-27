@@ -13,5 +13,4 @@ const  fetchToken = (endpoint, data, method = "GET")=>{
   } 
 }
 
-
 export {fetchToken}

@@ -37,13 +37,6 @@ const router = new VueRouter({
 			beforeEnter: verifyAutenticado,
 		},
 		{
-			path:"/nuevoLayout",
-			name:'nuevoLayout',
-			meta:{layout:BaseLayout2},
-			component: () => import("../components/hola.vue"),
-			beforeEnter: guard,
-		},
-		{
 			path: "/index",
 			name: "index",
 			meta: { layout: BaseLayout2 },

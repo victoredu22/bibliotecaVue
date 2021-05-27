@@ -36,4 +36,4 @@ const fechaConversion = (fechaCurso)=>{
 
 	return dia + " " + mes + " " + año;
 };
-export { formateoFecha, diasMes, fechaConversion };
+export { diaActual,formateoFecha, diasMes, fechaConversion };
