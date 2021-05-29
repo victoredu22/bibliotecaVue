@@ -45,7 +45,7 @@ const router = new VueRouter({
 		},
 		{
 			path: "/ingreso-libros",
-			name: "ingreso-Libros",
+			name: "ingreso-libros",
 			meta: { layout: BaseLayout2 },
 			component: () => import("../views/arriendoLibros.vue"),
 			beforeEnter: guard

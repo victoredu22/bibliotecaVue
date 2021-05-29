@@ -23,7 +23,7 @@
 			</b-button>
 		</v-client-table>
     <modalArriendo ref="componente"></modalArriendo>
-    <editarArriendo ref="componenteEditar"></editarArriendo>
+    <editarArriendo />
 	</div>
 </template>
 <script>
@@ -55,12 +55,9 @@ export default {
     ...mapActions("libros", ["activeLibro"]),
     arriendoModal(idLibro) {
 			this.activeLibro(idLibro);
-			this.$refs.componente.envioDatos();
 		},
     editarModal(idLibro) {
-
 			this.activeLibro(idLibro);
-			this.$refs.componenteEditar.datosLibro();
 		},
   }
 };

@@ -58,6 +58,19 @@ export default {
   },
   methods: {
     ...mapActions("libros", ["updateLibro"]),
+		...mapActions("cursos",["uploadCurso"]),
+		...mapActions("alumnos",["uploadAlumnos"]),
+		...mapActions("menu",["updateTitulo"]),
+		...mapActions("menu",['updateMenu']),
+		async loadCursos() {
+			const { data } = await fetchToken("cursoAll");
+			this.uploadCurso(data.getCurso);
+		},
+		async loadAlumnos() {
+      const { data } = await fetchToken('alumnos');
+      const { alumnos } = data;
+      this.uploadAlumnos(alumnos);
+    },
     async cargaTabla() {
       const { data } = await fetchToken('libros');
       this.updateLibro(data.libros);
@@ -69,6 +82,11 @@ export default {
   },
   created() {
     this.cargaTabla();
+		this.loadCursos();
+		this.loadAlumnos();
+
+		this.updateTitulo("home");
+    this.updateMenu([{urlTolbar:"index",nameToolbar:"Inicio"},{urlTolbar:"ingreso-libros", nameToolbar:"arriendo libro"}]);
   },
 };
 </script>
