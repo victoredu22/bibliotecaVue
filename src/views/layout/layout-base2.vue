@@ -13,7 +13,7 @@
 						<i class="fas fa-book"></i>  ingreso-Libros
 					</router-link>
           <router-link to="/buscar-pedido" v-bind:style="[this.$route.name === 'buscar-pedido' && styleObject]" class="d-block p-3 text-light" id="liMenu">
-						<i class="fas fa-book"></i>  Buscar un pedido
+						<i class="fas fa-search"></i> Buscar un pedido
 					</router-link>
          
         </div>

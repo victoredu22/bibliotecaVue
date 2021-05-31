@@ -1,7 +1,8 @@
 <template>
-  <div class="container-fluid">
-		<div class="row">
-			<div class="col-md-9 mb-4">
+  <div class="container-fluid ">
+		<div class="row rowIngreso" >
+				
+			<div class="col-md-9 mb-4 listadoLibros">
 				<div class="card">
 					<div class="card-body">
 						<h5 class="header-title mb-4">
@@ -12,7 +13,6 @@
 							libro.
 						</p>
             <tablaLibros/>
-
 					</div>
 				</div>
 			</div>
@@ -35,7 +35,6 @@
 							<i class="far fa-plus-square"></i>
 							Agregar libro
 						</b-button>
-
 					</div>
 				</div>
 			</div>
@@ -90,3 +89,13 @@ export default {
   },
 };
 </script>
+<style scoped>
+@media (max-width: 768px) {
+	.rowIngreso {
+    flex-direction: column-reverse;
+	}
+	.listadoLibros{
+		margin-top: 5%;
+	}
+}
+</style>

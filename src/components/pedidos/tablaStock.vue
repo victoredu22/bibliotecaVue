@@ -4,20 +4,19 @@
 			<h5 class="header-title mb-4">
 				Libros sin stock
 			</h5>
-			<div class="media">
-				<div data-v-76b02066="" class="row">
+			
+<!-- 				<div data-v-76b02066="" class="row">
 					<div data-v-76b02066="" class="col-4 nombreLibro">
 						<label >7</label>
 					</div>
 					<div data-v-76b02066="" class="col-8 text-center">
 						Guíaburros Criptomonedas
 					</div>
-				</div>
+				</div> -->
 
-				<div class="media-body">
 
 					
-					<!-- <b-alert v-if="librosSinstock.length === 0" show variant="info">No se encuentran libros sin stock.</b-alert>
+					<b-alert v-if="librosSinstock.length === 0" show variant="info">No se encuentran libros sin stock.</b-alert>
 					<b-table
 						v-else
 						striped
@@ -31,9 +30,8 @@
 						<template #cell(nombre_libro)="data">
 							{{ data.item.nombreLibro }}
 						</template>
-					</b-table>  -->
-				</div>
-			</div>
+					</b-table> 
+
 		</div>
 	</div>
 </template>

@@ -1,5 +1,4 @@
 <template>
-  <div>
     <div class="row">
       <div class="col-md-3 mb-3">
         <div class="card">
@@ -35,7 +34,6 @@
         <historialPedido />
       </div>
     </div>
-  </div>
 </template>
 <script>
 import { mapActions } from "vuex";
