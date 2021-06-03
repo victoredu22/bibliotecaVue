@@ -59,8 +59,7 @@ export default {
     ...mapActions("libros", ["updateLibro"]),
 		...mapActions("cursos",["uploadCurso"]),
 		...mapActions("alumnos",["uploadAlumnos"]),
-		...mapActions("menu",["updateTitulo"]),
-		...mapActions("menu",['updateMenu']),
+		...mapActions("menu",['loadNavbar']),
 		async loadCursos() {
 			const { data } = await fetchToken("cursoAll");
 			this.uploadCurso(data.getCurso);
@@ -84,8 +83,7 @@ export default {
 		this.loadCursos();
 		this.loadAlumnos();
 
-		this.updateTitulo("home");
-    this.updateMenu([{urlTolbar:"index",nameToolbar:"Inicio"},{urlTolbar:"ingreso-libros", nameToolbar:"arriendo libro"}]);
+		this.loadNavbar([{id:0},{id:1}]);
   },
 };
 </script>

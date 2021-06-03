@@ -26,6 +26,7 @@
 }
 
 #mostrar-modal + label {
+	padding-top: 1%;
 	color: #212529;
 	background-color: #f8f9fa;
 	display: table;
@@ -118,7 +119,7 @@
 	display: none !important;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
 	#lblModal {
 		display: block !important;
 	}

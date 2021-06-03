@@ -45,10 +45,9 @@ export default {
 		...mapState("pedidos", ["buscador"]),
 	},
 	methods: {
-		...mapActions("menu", ["updateMenu"]),
-		...mapActions("menu", ["updateTitulo"]),
 		...mapActions("pages", ["loadItems"]),
 		...mapActions("pages", ["loadData"]),
+		...mapActions("menu",["loadNavbar"]),
 		verFecha() {
 			console.log("hoa");
 		},
@@ -67,20 +66,9 @@ export default {
 		},
 	},
 	mounted() {
-		let menu = [
-			{
-				urlTolbar: "index",
-				nameToolbar: "Inicio",
-			},
-			{
-				urlTolbar: "buscador-pedido",
-				nameToolbar: "Buscador-pedido",
-			},
-		];
-		let titulo = "Home";
+		
+		this.loadNavbar([{id:0},{id:2}]);
 
-		this.updateTitulo(titulo);
-		this.updateMenu(menu);
 
 		this.loadCardItems();
 	},

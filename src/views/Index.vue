@@ -38,7 +38,7 @@
     </div>
 </template>
 <script>
-import { mapActions } from "vuex";
+import { mapState,mapActions } from "vuex";
 import moment from "moment";
 
 import historialPedido from "@/components/pedidos/historialPedido";
@@ -60,14 +60,14 @@ export default {
   computed: {
 		currentDateTime() {
       return moment().format("LL");
-    }
+    },
+    ...mapState('menu',['jsonMenu'])
 	},
   methods: {
     ...mapActions("alumnos", ["uploadAlumnos"]),
     ...mapActions("pedidos", ["updatePedido"]),
     ...mapActions("libros", ["uploadDataLibros"]),
-    ...mapActions("menu", ["updateMenu"]),
-    ...mapActions("menu", ["updateTitulo"]),
+    ...mapActions("menu",["loadNavbar"]),
     async loadPedidos() {
       const {data} = await fetchToken('pedidosRecientes');
 			const { getPedido: ultimosPedidos } = data;
@@ -93,9 +93,15 @@ export default {
     this.loadPedidos();
     this.loadAlumnos();
     this.loadLibros();
+    
+    this.loadNavbar([{id:0}]);
+  
 
-    this.updateTitulo("home");
-    this.updateMenu([{urlTolbar:"index",nameToolbar:"Inicio"}]);
-  },
+    //this.updateTitulo("home");
+    //this.updateMenu([{urlTolbar:"index",nameToolbar:"Inicio"}]);
+
+
+
+  }
 };
 </script>

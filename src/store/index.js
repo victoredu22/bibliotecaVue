@@ -12,6 +12,7 @@ export default new Vuex.Store({
 	state: {
 		accessToken: "" || localStorage.getItem("accessToken"),
 		autenticado: false || localStorage.getItem("autenticado"),
+		usuario: ''
 	},
 	mutations: {
 		SET_ACCESS_TOKEN(state, token) {
@@ -23,16 +24,20 @@ export default new Vuex.Store({
 		REMOVE_ACCESS_TOKEN(state) {
 			localStorage.removeItem("accessToken");
 			localStorage.removeItem("autenticado");
-			localStorage.removeItem("coordinadora");
 
 			state.accessToken = "";
-			state.coordinadora = "";
 			state.autenticado = false;
 		},
+		setUsuario(state,payload){
+			state.usuario = payload;
+		}
 	},
 	actions: {
 		setAccessToken(context, token) {
 			context.commit("SET_ACCESS_TOKEN", token);
+		},
+		setLoadUsuario({commit},payload){
+			commit('setUsuario',payload);
 		},
 		removeAccessToken(context) {
 			context.commit("REMOVE_ACCESS_TOKEN");

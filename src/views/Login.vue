@@ -79,7 +79,7 @@
 							v-else
 							class="btn btn-primary"
 							type="submit"
-							style="width:100%"
+							style="width:100%; background-color:#007bff !important; border-color:#007bff !important"
 						>
 							Iniciar Sesion
 						</button>
