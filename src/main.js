@@ -84,7 +84,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 /* import '@/assets/css/bootstrap.css' */
 import '@/assets/css/icons.min.css' 
 import '@/assets/css/app.min.css'
- 
+import './assets/css/menuModal.css'
 
 Vue.config.productionTip = false
 

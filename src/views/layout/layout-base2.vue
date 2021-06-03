@@ -5,22 +5,55 @@
           <h3 class="text-light font-weight-bold">Aministrador Biblioteca</h3>
         </div>
 
-        <div class="menu ">
-          <router-link to="/index" v-bind:style="[this.$route.name === 'index' && styleObject]" class="d-block p-3 text-light" id="liMenu">
-						<i class="fas fa-home"></i> Index
+        <div class="menu" v-for="item in menu" :key="item.id" >
+          <router-link :to="item.name" v-bind:style="[$route.name === item.name && styleObject]" class="d-block p-3 text-light" id="liMenu">
+						<i :class="item.className"></i> {{item.name}}
 					</router-link>
-          <router-link to="/ingreso-Libros" v-bind:style="[this.$route.name === 'ingreso-libros' && styleObject]" class="d-block p-3 text-light" id="liMenu">
-						<i class="fas fa-book"></i>  ingreso-Libros
-					</router-link>
-          <router-link to="/buscar-pedido" v-bind:style="[this.$route.name === 'buscar-pedido' && styleObject]" class="d-block p-3 text-light" id="liMenu">
-						<i class="fas fa-search"></i> Buscar un pedido
-					</router-link>
-         
         </div>
+
       </div>
       <div  class="w-100 bg-grey">
         <nav class="navbar navbar-expand-lg bg-light border-bottom">
           <div class="container-fluid">
+
+
+
+
+            <input id="mostrar-modal" name="modal" type="radio" @click="scroll(true)"/>
+            <label @click="eliminarClose()" for="mostrar-modal" id="lblModal"> <i class="fas fa-bars"></i> </label>
+            <div id="modal" ref="myModal" >
+
+            <input id="cerrar-modal" name="modal" type="radio" @click="scroll(false),close()" />
+            <label for="cerrar-modal"> X </label>
+
+            <div class="menu"> 
+                <div class="contenedorSesion">
+                  <i class="fas fa-user-alt"></i> 
+                  <span>
+                    Hola: {{this.usuario.nombre}} {{this.usuario.apellido}}
+                  </span>                
+                </div>
+                <div class="separadorMenu"></div>
+              
+                <div v-for="item in menu" :key="item.id" class="contenedorMenu"  @click="scroll(false),close()">
+                  <span>
+                      <router-link :to="item.name" v-bind:style="[$route.name === item.name && {color:'#007bff'}]" style="color:white" >
+                        <i :class="item.className"></i> {{item.name}}
+                      </router-link>
+                  </span>
+                </div>
+                <div class="divLogout">
+                  <div class="contenedorLogout" @click="cerrarSesion()">
+                      <i class="fas fa-sign-out-alt"></i> 
+                      <span>
+                        Salir  
+                      </span> 
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
             <form class="d-flex position-relative d-inline-block">
                 <input class="form-control me-2" type="search" placeholder="Buscar..." aria-label="Buscar">
                 <button class="btn btn-search position-absolute" type="submit"><i class="icon ion-md-search"></i></button>
@@ -68,6 +101,8 @@
               </nav>
             </div>
           </section>
+
+
           <section class="bg-mix">
             <div class="container-fluid ">
               <router-view />
@@ -86,9 +121,30 @@ export default {
 	data() {
 		return {
       styleObject: {
-      backgroundColor: '#5767EE',
+        backgroundColor: '#5767EE',
       },
-      usuario:{}
+      menu:[
+        {
+          id:0,
+          name:'index',
+          className:'fas fa-home',
+          estado:false
+        },
+        {
+          id:1,
+          name:'ingreso-libros',
+          className:'fas fa-book',
+          estado:false
+        },
+        {
+          id:2,
+          name:'buscar-pedido',
+          className:'fas fa-search',
+          estado:false
+        }
+      ],
+      usuario:{},
+      estadoScroll:false,
 		};
 	},
 	computed: {
@@ -98,6 +154,12 @@ export default {
 	},
 	methods: {
 		...mapActions(["removeAccessToken"]),
+    close(){
+      this.$refs["myModal"].className = "cerrarModal";
+    },
+    eliminarClose(){
+      this.$refs["myModal"].className = "";
+    },
 		cerrarSesion() {
 			this.removeAccessToken();
 			router.push({ name: "login" });
@@ -113,14 +175,23 @@ export default {
 				})
 				.catch((err) => console.log(err));
 		},
+    scroll(estado){
+      document.body.className = estado ? 'bodyHome' : 'null';
+    },
+
 	},
 	mounted() {
 		this.infoUsuario();
+    this.scroll(false)
 	},
 };
 </script>
 <style scoped>
- 
+
+
+
+  
+
   .bg-light { background-color: var(--white) !important; }
   .bg-primary{
     background-color: var(--primary) !important;

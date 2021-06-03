@@ -1,6 +1,6 @@
 <template>
 	<div class="card">
-		<div class="card-body">
+	
 			<div class="col-md-12">
 				<h5 class="header-title mb-4">
 					Libros mas pedidos ultimamente
@@ -14,7 +14,7 @@
 				:options="chartOptions"
 				:series="series"
 			/>
-		</div>
+	
 	</div>
 </template>
 <script>
@@ -35,7 +35,7 @@ export default {
 					breakpoint: 480,
 					options: {
 						chart: {
-							width: 350,
+							width: 300,
 						},
 						legend: {
 							show: false,
